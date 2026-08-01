@@ -25,6 +25,7 @@ export function Footer() {
           </div>
           <nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-muted-foreground" aria-label="Rodapé">
             <Link href="/" className="hover:text-foreground">Início</Link>
+            <Link href="/baixar" className="hover:text-foreground">Baixar artes</Link>
             <Link href="/eventos" className="hover:text-foreground">Eventos</Link>
             <Link href="/historico" className="hover:text-foreground">Histórico</Link>
             <Link href="/login" className="hover:text-foreground">Área administrativa</Link>

@@ -107,9 +107,9 @@ export default async function HomePage() {
                   variant="outline"
                   className="border-praise-gold/40 bg-transparent text-primary-foreground hover:bg-praise-gold/10 hover:text-primary-foreground praise-touch"
                 >
-                  <Link href="/eventos">
-                    <ImageIcon className="h-4 w-4" />
-                    Ver artes
+                  <Link href="/baixar">
+                    <Download className="h-4 w-4" />
+                    Baixar artes
                   </Link>
                 </Button>
               </div>
@@ -175,8 +175,9 @@ export default async function HomePage() {
                   </CardContent>
                   <div className="flex flex-wrap gap-2 border-t border-border bg-muted/30 px-4 py-3">
                     <Button asChild size="sm" className="praise-touch">
-                      <Link href={`/eventos/${proximoCulto.slug}`}>
-                        Ver materiais
+                      <Link href={`/baixar/${proximoCulto.slug}`}>
+                        <Download className="h-4 w-4" />
+                        Baixar artes
                       </Link>
                     </Button>
                     <Button
@@ -185,14 +186,13 @@ export default async function HomePage() {
                       variant="outline"
                       className="praise-touch"
                     >
-                      <Link href={`/eventos/${proximoCulto.slug}?baixar=1`}>
-                        <Download className="h-4 w-4" />
-                        Baixar artes
+                      <Link href={`/eventos/${proximoCulto.slug}`}>
+                        Ver detalhes
                       </Link>
                     </Button>
                     <CopyLinkButton
-                      url={`/eventos/${proximoCulto.slug}`}
-                      label="Copiar link"
+                      url={`/baixar/${proximoCulto.slug}`}
+                      label="Copiar link de download"
                       size="sm"
                       variant="ghost"
                     />
@@ -229,9 +229,9 @@ export default async function HomePage() {
             aria-label="Atalhos principais"
           >
             {[
-              { href: proximoCulto ? `/eventos/${proximoCulto.slug}` : "/eventos", label: "Próximo culto", icon: CalendarHeart },
-              { href: "/eventos", label: "Artes oficiais", icon: ImageIcon },
-              { href: "/eventos", label: "Banner e telão", icon: Download },
+              { href: proximoCulto ? `/baixar/${proximoCulto.slug}` : "/baixar", label: "Baixar artes", icon: Download },
+              { href: "/baixar", label: "Todos os cultos", icon: ImageIcon },
+              { href: "/eventos", label: "Próximos cultos", icon: CalendarHeart },
               { href: "/historico", label: "Histórico", icon: History },
             ].map((item) => (
               <Link

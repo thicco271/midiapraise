@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Church, LogOut, LayoutDashboard, Calendar, Settings, History } from "lucide-react";
+import { Menu, X, Church, LogOut, LayoutDashboard, Calendar, Settings, History, Download } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -16,6 +16,7 @@ interface NavItem {
 
 const navPublico: NavItem[] = [
   { href: "/", label: "Início", icon: Church },
+  { href: "/baixar", label: "Baixar artes", icon: Download },
   { href: "/eventos", label: "Próximos cultos", icon: Calendar },
   { href: "/historico", label: "Histórico", icon: History },
 ];
