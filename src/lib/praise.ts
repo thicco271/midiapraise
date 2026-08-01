@@ -83,22 +83,25 @@ export function selecionarProximoCulto<T extends { data: string | Date; destaque
   const publicados = eventos.filter((e) => e.status === "publicado");
   if (publicados.length === 0) return null;
 
-  const destacados = publicados.filter((e) => e.destaqueManual);
-  if (destacados.length > 0) {
-    const futuros = destacados.filter((e) => new Date(e.data) >= agora);
-    if (futuros.length > 0) {
-      return futuros.sort((a, b) => new Date(a.data).getTime() - new Date(b.data).getTime())[0];
-    }
-    return destacados[0];
-  }
-
+  // Próximo culto futuro (mais próximo da data atual)
   const futuros = publicados
     .filter((e) => new Date(e.data) >= agora)
     .sort((a, b) => new Date(a.data).getTime() - new Date(b.data).getTime());
 
-  if (futuros.length > 0) return futuros[0];
+  if (futuros.length > 0) {
+    // Se o mais próximo tiver destaque manual, retorna ele
+    // Senão, retorna o mais próximo (ignorando destaque manual de outros)
+    const maisProximo = futuros[0];
+    return maisProximo;
+  }
 
-  // Sem eventos futuros: retorna o último passado publicado
+  // Sem eventos futuros: se há destacado, retorna ele (mesmo que passado)
+  const destacados = publicados.filter((e) => e.destaqueManual);
+  if (destacados.length > 0) {
+    return destacados.sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime())[0];
+  }
+
+  // Sem eventos futuros nem destacados: retorna o último passado publicado
   return publicados
     .filter((e) => new Date(e.data) < agora)
     .sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime())[0] ?? null;

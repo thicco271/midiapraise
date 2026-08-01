@@ -1,11 +1,13 @@
 // GET    /api/events/[id]  -> detalhe (por id ou slug)
 // PATCH  /api/events/[id]  -> atualizar (admin/editor)
-// DELETE /api/events/[id]  -> excluir lógico (status=arquivado)
+// DELETE /api/events/[id]  -> excluir (lógico por padrão, definitivo com ?definitivo=true)
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getCurrentUser, canManageEvents } from "@/lib/session";
 import { uniqueSlug } from "@/lib/praise";
 import type { ApiResult, EventDTO, ProfileDTO } from "@/types";
+import fs from "node:fs/promises";
+import path from "node:path";
 
 function mapEvent(e: any): EventDTO {
   return {
@@ -185,7 +187,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   return NextResponse.json<ApiResult<EventDTO>>({ ok: true, data: mapEvent(atualizado) });
 }
 
-export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const user = await getCurrentUser();
   if (!user || !canManageEvents(user.perfil)) {
@@ -197,7 +199,94 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
     return NextResponse.json<ApiResult<never>>({ ok: false, error: "Evento não encontrado" }, { status: 404 });
   }
 
-  // Exclusão lógica: status = arquivado (preserva dados)
+  // Verifica se é exclusão definitiva (definitivo=true) ou apenas arquivar (padrão)
+  const { searchParams } = new URL(req.url);
+  const definitivo = searchParams.get("definitivo") === "true";
+
+  // Apenas administrador pode excluir definitivamente
+  if (definitivo && user.perfil !== "administrador") {
+    return NextResponse.json<ApiResult<never>>(
+      { ok: false, error: "Apenas administradores podem excluir definitivamente. Use arquivar." },
+      { status: 403 },
+    );
+  }
+
+  if (definitivo) {
+    // EXCLUSÃO DEFINITIVA — apaga tudo vinculado ao evento
+    // 1. Apaga arquivos físicos das mídias
+    const medias = await db.mediaAsset.findMany({
+      where: { eventoId: existente.id },
+      include: { versoes: true },
+    });
+
+    let arquivosApagados = 0;
+    for (const media of medias) {
+      for (const versao of media.versoes) {
+        for (const caminho of [versao.caminhoDoArquivo, versao.caminhoThumbnail]) {
+          if (!caminho) continue;
+          const rel = caminho.startsWith("/") ? caminho.slice(1) : caminho;
+          const abs = path.join(process.cwd(), "public", rel);
+          try {
+            await fs.unlink(abs);
+            arquivosApagados++;
+          } catch (err: any) {
+            if (err?.code !== "ENOENT") console.warn("[delete-event] Falha:", abs);
+          }
+        }
+      }
+    }
+
+    // 2. Apaga registros (cascade apaga versões)
+    await db.mediaAsset.deleteMany({ where: { eventoId: existente.id } });
+
+    // 3. Apaga álbuns vinculados (e suas fotos via cascade)
+    const albuns = await db.album.findMany({
+      where: { eventoId: existente.id },
+      include: { fotos: true },
+    });
+    for (const album of albuns) {
+      for (const foto of album.fotos) {
+        for (const caminho of [foto.caminhoOriginal, foto.caminhoOtimizado, foto.caminhoThumbnail]) {
+          if (!caminho) continue;
+          const rel = caminho.startsWith("/") ? caminho.slice(1) : caminho;
+          const abs = path.join(process.cwd(), "public", rel);
+          try {
+            await fs.unlink(abs);
+            arquivosApagados++;
+          } catch (err: any) {
+            if (err?.code !== "ENOENT") console.warn("[delete-event] Falha:", abs);
+          }
+        }
+      }
+    }
+    await db.album.deleteMany({ where: { eventoId: existente.id } });
+
+    // 4. Apaga o evento
+    await db.event.delete({ where: { id: existente.id } });
+
+    await db.auditLog.create({
+      data: {
+        usuarioId: user.id,
+        acao: "excluir",
+        entidade: "evento",
+        entidadeId: existente.id,
+        descricao: `Evento '${existente.nome}' excluído definitivamente (${medias.length} mídia(s), ${albuns.length} álbum(ns), ${arquivosApagados} arquivo(s) apagado(s))`,
+        dadosAnteriores: JSON.stringify({
+          nome: existente.nome,
+          status: existente.status,
+          medias: medias.length,
+          albuns: albuns.length,
+        }),
+      },
+    });
+
+    return NextResponse.json<ApiResult<{ id: string; definitivo: true; arquivos: number }>>({
+      ok: true,
+      data: { id: existente.id, definitivo: true, arquivos: arquivosApagados },
+    });
+  }
+
+  // EXCLUSÃO LÓGICA (padrão) — apenas arquiva
   const arquivado = await db.event.update({
     where: { id: existente.id },
     data: { status: "arquivado", atualizadoPorId: user.id },

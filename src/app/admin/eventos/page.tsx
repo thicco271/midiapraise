@@ -3,9 +3,7 @@ import { db } from "@/lib/db";
 import { AdminGuard } from "@/components/praisehub/admin-guard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { StatusBadge } from "@/components/praisehub/status-badge";
-import { formatarData, formatarHorario } from "@/lib/praise";
-import { Plus, Calendar, Search } from "lucide-react";
+import { Plus, Calendar } from "lucide-react";
 import { AdminEventList } from "@/components/praisehub/admin-event-list";
 
 export const metadata = { title: "Gerenciar eventos · ADSA Reimberg Mídias Admin" };
