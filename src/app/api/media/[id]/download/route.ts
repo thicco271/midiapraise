@@ -1,9 +1,12 @@
-// GET /api/media/[id]/download - incrementa contador e redireciona para URL pública
+// GET /api/media/[id]/download - serve o arquivo físico diretamente
 // Não exige login — apenas verifica se a mídia está publicada
+// Servir direto evita redirect para 0.0.0.0 em ambientes com proxy
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import fs from "node:fs/promises";
+import path from "node:path";
 
-export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
   const versao = await db.mediaVersion.findUnique({
@@ -12,12 +15,12 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
   });
 
   if (!versao) {
-    return NextResponse.json({ ok: false, error: "Mídia não encontrada" }, { status: 404 });
+    return new NextResponse("Mídia não encontrada", { status: 404 });
   }
 
   // Verifica se está publicado — se não, bloqueia
   if (versao.mediaAsset && versao.mediaAsset.status !== "publicado") {
-    return NextResponse.json({ ok: false, error: "Mídia não publicada" }, { status: 403 });
+    return new NextResponse("Mídia não publicada", { status: 403 });
   }
 
   // Incrementa contador no asset
@@ -26,19 +29,27 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     data: { quantidadeDownloads: { increment: 1 } },
   });
 
-  // Caminho relativo (sempre começa com /)
-  const url = versao.caminhoDoArquivo.startsWith("/")
-    ? versao.caminhoDoArquivo
-    : `/${versao.caminhoDoArquivo}`;
+  // Caminho físico do arquivo
+  // versao.caminhoDoArquivo é "/uploads/adsa-reimberg/..." (caminho público)
+  const publicDir = path.join(process.cwd(), "public");
+  const caminhoRel = versao.caminhoDoArquivo.startsWith("/")
+    ? versao.caminhoDoArquivo.slice(1)
+    : versao.caminhoDoArquivo;
+  const caminhoAbs = path.join(publicDir, caminhoRel);
 
-  // Redirecionamento 302 — funciona atrás de proxy/CDN sem perder host
-  // Força Content-Disposition: attachment para garantir download (não inline)
-  const redirectUrl = new URL(url, req.nextUrl.origin);
-  return NextResponse.redirect(redirectUrl, {
-    status: 302,
-    headers: {
-      "Cache-Control": "no-store",
-      "Content-Disposition": `attachment; filename="${versao.nomePadronizado}"`,
-    },
-  });
+  try {
+    const buffer = await fs.readFile(caminhoAbs);
+    return new NextResponse(buffer, {
+      status: 200,
+      headers: {
+        "Content-Type": versao.mimeType || "application/octet-stream",
+        "Content-Length": String(buffer.length),
+        "Content-Disposition": `attachment; filename="${encodeURIComponent(versao.nomePadronizado)}"`,
+        "Cache-Control": "public, max-age=3600",
+      },
+    });
+  } catch (err) {
+    console.error("[download] Falha ao ler arquivo:", caminhoAbs, err);
+    return new NextResponse("Arquivo físico não encontrado no servidor", { status: 404 });
+  }
 }
