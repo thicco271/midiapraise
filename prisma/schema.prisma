@@ -35,6 +35,9 @@ model Profile {
   feedbacks            ProductFeedback[]
   mediaEnviados        MediaAsset[]  @relation("MediaSender")
   mediaAprovados       MediaAsset[]  @relation("MediaApprover")
+  albunsCriados        Album[]       @relation("AlbumCreator")
+  fotosEnviadas        AlbumPhoto[]  @relation("PhotoSender")
+  fotosAprovadas       AlbumPhoto[]  @relation("PhotoApprover")
 
   @@index([perfil])
   @@index([status])
@@ -113,6 +116,7 @@ model Event {
   criadoPor      Profile?       @relation("EventCreator", fields: [criadoPorId], references: [id])
   atualizadoPor  Profile?       @relation("EventUpdater", fields: [atualizadoPorId], references: [id])
   mediaAssets    MediaAsset[]
+  albuns         Album[]
 
   @@index([status])
   @@index([visibilidade])
@@ -227,4 +231,64 @@ model MediaVersion {
 
   @@index([mediaAssetId])
   @@index([arquivoOficial])
+}
+
+// ============================================================
+// GALERIA DE FOTOS (Fase 4)
+// ============================================================
+
+model Album {
+  id                  String   @id @default(cuid())
+  eventoId            String?
+  nome                String
+  slug                String   @unique
+  descricao           String?
+  fotografo           String?
+  capaPhotoId         String?  // referência para a foto capa (opcional, sem relation direto p/ evitar ciclo)
+  status              String   @default("rascunho")
+  // rascunho | publicado | arquivado
+  visibilidade        String   @default("publico")
+  // publico | somente_equipe | somente_autenticados | privado
+  permitirDownload    Boolean  @default(true)
+  aceitarContribuicoes Boolean @default(false)
+  criadoPorId         String?
+  criadoEm            DateTime @default(now())
+  atualizadoEm        DateTime @updatedAt
+  publicadoEm         DateTime?
+
+  evento              Event?   @relation(fields: [eventoId], references: [id], onDelete: SetNull)
+  criadoPor           Profile? @relation("AlbumCreator", fields: [criadoPorId], references: [id])
+  fotos               AlbumPhoto[]
+
+  @@index([eventoId])
+  @@index([status])
+  @@index([visibilidade])
+}
+
+model AlbumPhoto {
+  id                String   @id @default(cuid())
+  albumId           String
+  caminhoOriginal   String
+  caminhoOtimizado  String?  // versão otimizada para web
+  caminhoThumbnail  String?  // miniatura para grid
+  nomeOriginal      String
+  legenda           String?
+  ordem             Int      @default(0)
+  status            String   @default("publicado")
+  // rascunho | publicado | arquivado
+  enviadoPorId      String?
+  enviadoEm         DateTime @default(now())
+  aprovadoPorId     String?
+  aprovadoEm        DateTime?
+  largura           Int?
+  altura            Int?
+  tamanho           Int?
+  mimeType          String?
+
+  album             Album    @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  enviadoPor        Profile? @relation("PhotoSender", fields: [enviadoPorId], references: [id])
+  aprovadoPor       Profile? @relation("PhotoApprover", fields: [aprovadoPorId], references: [id])
+
+  @@index([albumId])
+  @@index([ordem])
 }

@@ -45,6 +45,8 @@ import {
   Archive,
   Pencil,
   Trash2,
+  Upload,
+  X,
 } from "lucide-react";
 import { formatarData } from "@/lib/praise";
 import { toast } from "sonner";
@@ -83,6 +85,10 @@ export function MediaGrid({ assets, titulo, mostrarAcoesAdmin = false }: MediaGr
     textoDeDivulgacao: "",
     visibilidade: "publico" as "publico" | "privado",
   });
+  // Substituição de arquivo dentro do modal de edição
+  const [substituirArquivo, setSubstituirArquivo] = useState<File | null>(null);
+  const [substituirPreview, setSubstituirPreview] = useState<string | null>(null);
+  const [substituindo, setSubstituindo] = useState(false);
 
   // Modal de exclusão
   const [excluindo, setExcluindo] = useState<MediaAssetDTO | null>(null);
@@ -150,6 +156,44 @@ export function MediaGrid({ assets, titulo, mostrarAcoesAdmin = false }: MediaGr
       textoDeDivulgacao: asset.textoDeDivulgacao ?? "",
       visibilidade: (asset.visibilidade as "publico" | "privado") ?? "publico",
     });
+    setSubstituirArquivo(null);
+    if (substituirPreview) URL.revokeObjectURL(substituirPreview);
+    setSubstituirPreview(null);
+  };
+
+  const selecionarSubstituto = (file: File | null) => {
+    if (substituirPreview) URL.revokeObjectURL(substituirPreview);
+    setSubstituirArquivo(file);
+    setSubstituirPreview(file && file.type.startsWith("image/") ? URL.createObjectURL(file) : null);
+  };
+
+  const substituirArquivoAtual = async () => {
+    if (!editando || !substituirArquivo) return;
+    setSubstituindo(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", substituirArquivo);
+      formData.append("tipo", editando.tipo);
+      formData.append("nome", editando.nome);
+
+      const res = await fetch(`/api/events/${editando.eventoId}/upload`, {
+        method: "POST",
+        body: formData,
+      });
+      const body = await res.json();
+      if (!res.ok || !body?.ok) {
+        toast.error(body?.error ?? "Falha ao substituir arquivo");
+        return;
+      }
+      toast.success("Nova versão enviada! A versão atual foi substituída.");
+      selecionarSubstituto(null);
+      setEditando(null);
+      router.refresh();
+    } catch {
+      toast.error("Falha na comunicação");
+    } finally {
+      setSubstituindo(false);
+    }
   };
 
   const salvarEdicao = async () => {
@@ -441,6 +485,82 @@ export function MediaGrid({ assets, titulo, mostrarAcoesAdmin = false }: MediaGr
                 placeholder="Anotações internas (não exibidas publicamente)…"
                 rows={2}
               />
+            </div>
+
+            {/* Substituir arquivo */}
+            <div className="space-y-2 rounded-lg border border-dashed border-border bg-muted/30 p-3">
+              <div className="flex items-center justify-between gap-2">
+                <Label className="font-medium">Substituir arquivo</Label>
+                {editando?.versaoOficial && (
+                  <Badge variant="outline" className="border-0 bg-muted text-muted-foreground text-[10px]">
+                    Versão atual: v{editando.versaoOficial.numeroDaVersao}
+                  </Badge>
+                )}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Selecione um novo arquivo para criar uma nova versão (v{(editando?.versaoAtual ?? 0) + 1}).
+                A versão atual será preservada no histórico mas a nova passará a ser a oficial.
+              </p>
+              {substituirPreview && (
+                <div className="overflow-hidden rounded-md border border-border">
+                  <img src={substituirPreview} alt="Pré-visualização" className="aspect-video w-full object-cover" />
+                </div>
+              )}
+              {substituirArquivo ? (
+                <div className="flex items-center justify-between gap-2 rounded-md border border-border bg-card p-2 text-xs">
+                  <span className="truncate">{substituirArquivo.name}</span>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => selecionarSubstituto(null)}
+                    className="h-7 px-2"
+                    disabled={substituindo}
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="w-full praise-touch"
+                  onClick={() => {
+                    const input = document.createElement("input");
+                    input.type = "file";
+                    input.accept = "image/png,image/jpeg,image/webp,image/gif,application/pdf,video/mp4,application/zip";
+                    input.onchange = (e) => {
+                      const f = (e.target as HTMLInputElement).files?.[0];
+                      if (f) selecionarSubstituto(f);
+                    };
+                    input.click();
+                  }}
+                >
+                  <Upload className="h-4 w-4" />
+                  Selecionar novo arquivo
+                </Button>
+              )}
+              {substituirArquivo && (
+                <Button
+                  type="button"
+                  size="sm"
+                  className="w-full praise-touch"
+                  onClick={substituirArquivoAtual}
+                  disabled={substituindo}
+                >
+                  {substituindo ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Enviando nova versão…
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="h-4 w-4" />
+                      Enviar nova versão (v{(editando?.versaoAtual ?? 0) + 1})
+                    </>
+                  )}
+                </Button>
+              )}
             </div>
           </div>
           <DialogFooter>

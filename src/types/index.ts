@@ -131,3 +131,43 @@ export interface ApiResult<T> {
   data?: T;
   error?: string;
 }
+
+// ============================================================
+// GALERIA DE FOTOS (Fase 4)
+// ============================================================
+
+export interface AlbumPhotoDTO {
+  id: string;
+  albumId: string;
+  caminhoOriginal: string;
+  caminhoOtimizado?: string | null;
+  caminhoThumbnail?: string | null;
+  nomeOriginal: string;
+  legenda?: string | null;
+  ordem: number;
+  status: "rascunho" | "publicado" | "arquivado";
+  enviadoEm: string;
+  largura?: number | null;
+  altura?: number | null;
+  tamanho?: number | null;
+  mimeType?: string | null;
+}
+
+export interface AlbumDTO {
+  id: string;
+  eventoId?: string | null;
+  nome: string;
+  slug: string;
+  descricao?: string | null;
+  fotografo?: string | null;
+  capaPhotoId?: string | null;
+  status: "rascunho" | "publicado" | "arquivado";
+  visibilidade: "publico" | "somente_equipe" | "somente_autenticados" | "privado";
+  permitirDownload: boolean;
+  aceitarContribuicoes: boolean;
+  criadoEm: string;
+  atualizadoEm: string;
+  publicadoEm?: string | null;
+  fotoCapa?: AlbumPhotoDTO | null;
+  totalFotos: number;
+}
