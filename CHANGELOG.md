@@ -17,6 +17,13 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.
 - Páginas de detalhe do evento agora exibem o título "ADSA Reimberg Mídias" no `<title>` do browser.
 - Header e footer atualizados com o novo nome em todas as páginas.
 
+### Fixed
+
+- **Build de produção quebrava** com erro `useSearchParams() should be wrapped in a suspense boundary at page "/login"`.
+  - Causa: a página `/login` usava `useSearchParams()` diretamente no componente raiz, o que impede o Next.js de pré-renderizar a página estaticamente.
+  - Correção: extraído o formulário para um componente filho `LoginForm` envolto por `<Suspense>` na página raiz.
+  - Impacto: build de produção agora passa sem erros, permitindo deploy no `reimbergmidias.space-z.ai`.
+
 ### Preservado (não alterado)
 
 - E-mail do admin `admin@adsapraise.org` (identificador interno, não requer mudança).
