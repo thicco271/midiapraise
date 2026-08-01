@@ -64,7 +64,7 @@ Implementação: ver `docs/storage.md` seção "Remoção de metadados sensívei
 
 ### Solicitação de remoção
 Qualquer pessoa pode solicitar a remoção de:
-- Foto sua publicada no PraiseHub.
+- Foto sua publicada no ADSA Reimberg Mídias.
 - Dado pessoal incorreto.
 - Contribuição enviada (mesmo já publicada).
 
@@ -113,7 +113,7 @@ Apenas um cookie de sessão:
 
 ## Conformidade
 
-O PraiseHub segue os princípios da LGPD (Lei Geral de Proteção de Dados, Brasil):
+O ADSA Reimberg Mídias segue os princípios da LGPD (Lei Geral de Proteção de Dados, Brasil):
 
 - Base legal: legítimo interesse para operação da igreja.
 - Finalidade: gerenciamento de mídia para divulgação de cultos.
@@ -122,4 +122,4 @@ O PraiseHub segue os princípios da LGPD (Lei Geral de Proteção de Dados, Bras
 - Segurança: técnicas listadas acima.
 - Não discriminação: não há decisões automatizadas com base nos dados.
 
-Para dúvidas de privacidade: contactar o administrador da ADSA Praise.
+Para dúvidas de privacidade: contactar o administrador da ADSA Reimberg.

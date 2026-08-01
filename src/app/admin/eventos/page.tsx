@@ -8,7 +8,7 @@ import { formatarData, formatarHorario } from "@/lib/praise";
 import { Plus, Calendar, Search } from "lucide-react";
 import { AdminEventList } from "@/components/praisehub/admin-event-list";
 
-export const metadata = { title: "Gerenciar eventos · PraiseHub Admin" };
+export const metadata = { title: "Gerenciar eventos · ADSA Reimberg Mídias Admin" };
 
 async function getEventos() {
   return db.event.findMany({
@@ -65,7 +65,7 @@ export default async function AdminEventosPage() {
               <Calendar className="h-10 w-10 text-muted-foreground" aria-hidden="true" />
               <p className="text-lg font-semibold">Nenhum evento ainda</p>
               <p className="max-w-md text-sm text-muted-foreground">
-                Comece criando o primeiro culto da ADSA Praise.
+                Comece criando o primeiro culto da ADSA Reimberg.
               </p>
               <Button asChild>
                 <Link href="/admin/eventos/novo">

@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ============================================================
-   PraiseHub - Design System
+   ADSA Reimberg Mídias - Design System
    Paleta: Azul profundo + Branco + Dourado suave + Cinzas neutros
    ============================================================ */
 
@@ -42,7 +42,7 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  /* Tokens semânticos PraiseHub */
+  /* Tokens semânticos ADSA Reimberg Mídias */
   --color-praise-deep: var(--praise-deep);
   --color-praise-gold: var(--praise-gold);
   --color-praise-soft: var(--praise-soft);
@@ -55,7 +55,7 @@
 :root {
   --radius: 0.625rem;
 
-  /* Paleta PraiseHub (Light) */
+  /* Paleta ADSA Reimberg Mídias (Light) */
   --praise-deep: #0F2A5C;     /* azul profundo - cor principal */
   --praise-gold: #C9A227;     /* dourado suave - destaque */
   --praise-soft: #F6F2E7;     /* creme claro - realce suave */

@@ -7,8 +7,8 @@ import { History, ChevronLeft } from "lucide-react";
 import { AnoFiltro } from "@/components/praisehub/ano-filtro";
 
 export const metadata = {
-  title: "Histórico de cultos · PraiseHub",
-  description: "Consulte os cultos e eventos anteriores da ADSA Praise.",
+  title: "Histórico de cultos · ADSA Reimberg Mídias",
+  description: "Consulte os cultos e eventos anteriores da ADSA Reimberg.",
 };
 
 export default async function HistoricoPage({

@@ -28,9 +28,9 @@ import { ShareWhatsAppButton } from "@/components/praisehub/share-whatsapp-butto
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const evento = await db.event.findUnique({ where: { slug } });
-  if (!evento) return { title: "Evento não encontrado · PraiseHub" };
+  if (!evento) return { title: "Evento não encontrado · ADSA Reimberg Mídias" };
   return {
-    title: `${evento.nome} · PraiseHub`,
+    title: `${evento.nome} · ADSA Reimberg Mídias`,
     description: evento.tema ?? evento.descricao ?? `Detalhes do evento ${evento.nome}`,
   };
 }

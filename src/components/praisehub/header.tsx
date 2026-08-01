@@ -36,7 +36,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="praise-container flex h-16 items-center justify-between gap-4">
-        <Link href="/" className="flex items-center gap-2" aria-label="PraiseHub - página inicial">
+        <Link href="/" className="flex items-center gap-2" aria-label="ADSA Reimberg Mídias - página inicial">
           <span
             className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm"
             aria-hidden="true"
@@ -44,9 +44,9 @@ export function Header() {
             <Church className="h-5 w-5" />
           </span>
           <span className="flex flex-col leading-tight">
-            <span className="text-base font-bold text-primary">PraiseHub</span>
+            <span className="text-base font-bold text-primary">ADSA Reimberg Mídias</span>
             <span className="hidden text-[11px] uppercase tracking-widest text-praise-gold sm:inline">
-              ADSA Praise
+              ADSA Reimberg
             </span>
           </span>
         </Link>

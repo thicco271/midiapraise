@@ -1,4 +1,4 @@
-// PraiseHub - Seed inicial
+// ADSA Reimberg Mídias - Seed inicial
 // Cria: admin padrão, categorias iniciais, configurações da igreja.
 // Idempotente: pode ser executado várias vezes.
 
@@ -8,7 +8,7 @@ import bcrypt from "bcryptjs";
 const db = new PrismaClient();
 
 async function main() {
-  console.log("[seed] Iniciando seed do PraiseHub…");
+  console.log("[seed] Iniciando seed da ADSA Reimberg Mídias…");
 
   // 1. Admin padrão
   const senhaPadrao = process.env.PRAISEHUB_ADMIN_PASSWORD || "praisehub2026";
@@ -19,7 +19,7 @@ async function main() {
     where: { email: adminEmail },
     update: {},
     create: {
-      nome: "Administrador PraiseHub",
+      nome: "Administrador ADSA Reimberg",
       email: adminEmail,
       senhaHash,
       perfil: "administrador",
@@ -34,11 +34,11 @@ async function main() {
     update: {},
     create: {
       id: "singleton",
-      nomeDaIgreja: "ADSA Praise",
-      nomeDaAplicacao: "PraiseHub",
-      subtitulo: "Central de Mídia ADSA Praise",
+      nomeDaIgreja: "ADSA Reimberg",
+      nomeDaAplicacao: "ADSA Reimberg Mídias",
+      subtitulo: "Central de Mídia ADSA Reimberg",
       textoPrincipal:
-        "Artes, fotos e materiais oficiais da ADSA Praise, organizados em um só lugar.",
+        "Artes, fotos e materiais oficiais da ADSA Reimberg, organizados em um só lugar.",
       textoComplementar:
         "Consulte o próximo culto, encontre as versões atualizadas e baixe os materiais necessários para divulgação e utilização na igreja.",
       corPrimaria: "#0F2A5C",
@@ -93,11 +93,11 @@ async function main() {
         slug: "culto-da-familia-2026-08-09",
         categoriaId: catFamilia?.id,
         descricao:
-          "Uma noite especial de adoração e gratidão pelas famílias da ADSA Praise. Venha celebrar conosco!",
+          "Uma noite especial de adoração e gratidão pelas famílias da ADSA Reimberg. Venha celebrar conosco!",
         data: dataEvento,
         horarioInicio: "19:30",
         horarioFim: "21:30",
-        local: "Templo ADSA Praise",
+        local: "Templo ADSA Reimberg",
         endereco: "Av. Exemplo, 1000 - São Paulo/SP",
         tema: "Famílias que adoram juntos",
         versiculo: "Salmo 133:1",

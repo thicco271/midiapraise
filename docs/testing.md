@@ -214,7 +214,7 @@ jobs:
 | `lib/praise.ts` | ≥ 90% |
 | `lib/session.ts` | ≥ 90% |
 | APIs administrativas | ≥ 80% |
-| Componentes PraiseHub | ≥ 70% |
+| Componentes ADSA Reimberg Mídias | ≥ 70% |
 | E2E cenários spec | 5/5 |
 
 ## Quando rodar

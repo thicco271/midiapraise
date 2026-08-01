@@ -235,7 +235,7 @@ export function EventForm({ categorias, eventoExistente }: EventFormProps) {
                       id="local"
                       value={form.local}
                       onChange={(e) => set("local", e.target.value)}
-                      placeholder="Ex.: Templo ADSA Praise"
+                      placeholder="Ex.: Templo ADSA Reimberg"
                       className="praise-touch"
                     />
                   </div>

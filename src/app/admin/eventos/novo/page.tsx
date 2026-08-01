@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { AdminGuard } from "@/components/praisehub/admin-guard";
 import { EventForm } from "@/components/praisehub/event-form";
 
-export const metadata = { title: "Novo culto · PraiseHub Admin" };
+export const metadata = { title: "Novo culto · ADSA Reimberg Mídias Admin" };
 
 async function getCategorias() {
   return db.eventCategory.findMany({

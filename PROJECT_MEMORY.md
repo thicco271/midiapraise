@@ -1,4 +1,4 @@
-# PROJECT_MEMORY — PraiseHub
+# PROJECT_MEMORY — ADSA Reimberg Mídias
 
 > Memória persistente do projeto. Decisões, aprendizados e regras permanentes.
 

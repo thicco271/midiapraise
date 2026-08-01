@@ -17,9 +17,9 @@ export function Footer() {
               <Church className="h-4 w-4" />
             </span>
             <div className="text-sm">
-              <p className="font-semibold text-foreground">PraiseHub</p>
+              <p className="font-semibold text-foreground">ADSA Reimberg Mídias</p>
               <p className="text-xs text-muted-foreground">
-                Central de Mídia ADSA Praise · {ano}
+                Central de Mídia ADSA Reimberg · {ano}
               </p>
             </div>
           </div>

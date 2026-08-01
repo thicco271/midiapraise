@@ -1,4 +1,4 @@
-# docs/design-system.md — Design System PraiseHub
+# docs/design-system.md — Design System ADSA Reimberg Mídias
 
 ## Direção visual
 

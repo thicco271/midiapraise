@@ -1,4 +1,4 @@
-// PraiseHub - Sessão simples baseada em cookie assinado
+// ADSA Reimberg Mídias - Sessão simples baseada em cookie assinado
 // Mantém o estado de autenticação sem dependência externa pesada.
 
 import { SignJWT, jwtVerify } from "jose";

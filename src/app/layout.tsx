@@ -13,27 +13,27 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "PraiseHub · Central de Mídia ADSA Praise",
+  title: "ADSA Reimberg Mídias · Central de Mídia ADSA Reimberg",
   description:
-    "Artes, fotos e materiais oficiais da ADSA Praise, organizados em um só lugar. Consulte o próximo culto, baixe as artes e utilize na igreja.",
+    "Artes, fotos e materiais oficiais da ADSA Reimberg, organizados em um só lugar. Consulte o próximo culto, baixe as artes e utilize na igreja.",
   keywords: [
-    "PraiseHub",
-    "ADSA Praise",
+    "ADSA Reimberg Mídias",
+    "ADSA Reimberg",
     "mídia",
     "culto",
     "artes",
     "galeria",
     "igreja",
   ],
-  authors: [{ name: "ADSA Praise" }],
+  authors: [{ name: "ADSA Reimberg" }],
   icons: {
     icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
   },
   openGraph: {
-    title: "PraiseHub · Central de Mídia ADSA Praise",
+    title: "ADSA Reimberg Mídias · Central de Mídia ADSA Reimberg",
     description:
-      "Artes, fotos e materiais oficiais da ADSA Praise, organizados em um só lugar.",
-    siteName: "PraiseHub",
+      "Artes, fotos e materiais oficiais da ADSA Reimberg, organizados em um só lugar.",
+    siteName: "ADSA Reimberg Mídias",
     type: "website",
   },
 };

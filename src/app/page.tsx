@@ -60,10 +60,10 @@ async function getDadosIniciais() {
 export default async function HomePage() {
   const { settings, proximoCulto, daSemana, ultimos } = await getDadosIniciais();
 
-  const subtitulo = settings?.subtitulo ?? "Central de Mídia ADSA Praise";
+  const subtitulo = settings?.subtitulo ?? "Central de Mídia ADSA Reimberg";
   const textoPrincipal =
     settings?.textoPrincipal ??
-    "Artes, fotos e materiais oficiais da ADSA Praise, organizados em um só lugar.";
+    "Artes, fotos e materiais oficiais da ADSA Reimberg, organizados em um só lugar.";
   const textoComplementar =
     settings?.textoComplementar ??
     "Consulte o próximo culto, encontre as versões atualizadas e baixe os materiais necessários para divulgação e utilização na igreja.";
@@ -83,7 +83,7 @@ export default async function HomePage() {
             <div className="space-y-5">
               <p className="inline-flex items-center gap-2 rounded-full border border-praise-gold/40 bg-praise-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-praise-gold">
                 <Sparkles className="h-3 w-3" aria-hidden="true" />
-                Fonte oficial · ADSA Praise
+                Fonte oficial · ADSA Reimberg
               </p>
               <h1 className="font-serif text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
                 {subtitulo}

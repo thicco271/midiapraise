@@ -6,8 +6,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Calendar } from "lucide-react";
 
 export const metadata = {
-  title: "Próximos cultos · PraiseHub",
-  description: "Consulte os próximos cultos e eventos da ADSA Praise.",
+  title: "Próximos cultos · ADSA Reimberg Mídias",
+  description: "Consulte os próximos cultos e eventos da ADSA Reimberg.",
 };
 
 export default async function EventosPage({
@@ -57,7 +57,7 @@ export default async function EventosPage({
         <p className="praise-eyebrow">Eventos</p>
         <h1 className="praise-title">Próximos cultos e eventos</h1>
         <p className="praise-subtitle max-w-2xl">
-          Consulte datas, horários e materiais oficiais dos próximos eventos da ADSA Praise.
+          Consulte datas, horários e materiais oficiais dos próximos eventos da ADSA Reimberg.
         </p>
       </header>
 

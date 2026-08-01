@@ -56,9 +56,9 @@ export default function LoginPage() {
           <div className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-md">
             <Church className="h-6 w-6" aria-hidden="true" />
           </div>
-          <CardTitle className="text-2xl">Entrar no PraiseHub</CardTitle>
+          <CardTitle className="text-2xl">Entrar na ADSA Reimberg Mídias</CardTitle>
           <p className="text-sm text-muted-foreground">
-            Acesso restrito à equipe de mídia da ADSA Praise.
+            Acesso restrito à equipe de mídia da ADSA Reimberg.
           </p>
         </CardHeader>
         <CardContent>

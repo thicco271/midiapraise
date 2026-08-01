@@ -1,4 +1,4 @@
-// PraiseHub - Tipos compartilhados
+// ADSA Reimberg Mídias - Tipos compartilhados
 // Espelham parcialmente os modelos Prisma + respostas de API
 
 export type Perfil = "administrador" | "editor" | "aprovador" | "fotografo" | "equipe_midia" | "visitante";

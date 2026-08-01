@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { AdminGuard } from "@/components/praisehub/admin-guard";
 import { ChurchSettingsForm } from "@/components/praisehub/church-settings-form";
 
-export const metadata = { title: "Configurações · PraiseHub Admin" };
+export const metadata = { title: "Configurações · ADSA Reimberg Mídias Admin" };
 
 async function getSettings() {
   const s = await db.churchSettings.findUnique({ where: { id: "singleton" } });

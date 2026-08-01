@@ -1,4 +1,4 @@
-// PraiseHub - Utilitários compartilhados
+// ADSA Reimberg Mídias - Utilitários compartilhados
 
 import type { EventStatus } from "@/types";
 

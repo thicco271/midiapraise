@@ -2,7 +2,7 @@
 
 ## Problema
 
-A equipe de mídia da ADSA Praise gerencia artes oficiais (WhatsApp, redes sociais, telão), banners e fotos de cultos usando grupos de WhatsApp. Isso gera:
+A equipe de mídia da ADSA Reimberg gerencia artes oficiais (WhatsApp, redes sociais, telão), banners e fotos de cultos usando grupos de WhatsApp. Isso gera:
 
 - Arquivos perdidos após scroll.
 - Versões conflitantes (uma no grupo da liderança, outra no grupo de mídia).
@@ -13,7 +13,7 @@ A equipe de mídia da ADSA Praise gerencia artes oficiais (WhatsApp, redes socia
 
 ## Solução
 
-PraiseHub é a fonte oficial dos materiais de mídia. WhatsApp continua sendo usado para comunicação e compartilhamento de links, mas nunca como repositório.
+ADSA Reimberg Mídias é a fonte oficial dos materiais de mídia. WhatsApp continua sendo usado para comunicação e compartilhamento de links, mas nunca como repositório.
 
 ## Personas
 

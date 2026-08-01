@@ -22,7 +22,7 @@ export function ShareWhatsAppButton({
   const handleClick = () => {
     const origin = typeof window !== "undefined" ? window.location.origin : "";
     const url = `${origin}/eventos/${slug}`;
-    const mensagem = `As artes oficiais do próximo culto já estão disponíveis no PraiseHub. Acesse o link para visualizar e baixar as versões atualizadas.\n\n${nome}\n${url}`;
+    const mensagem = `As artes oficiais do próximo culto já estão disponíveis na ADSA Reimberg Mídias. Acesse o link para visualizar e baixar as versões atualizadas.\n\n${nome}\n${url}`;
     const waUrl = `https://wa.me/?text=${encodeURIComponent(mensagem)}`;
     if (typeof window !== "undefined") {
       window.open(waUrl, "_blank", "noopener,noreferrer");

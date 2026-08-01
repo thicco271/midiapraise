@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { AdminGuard } from "@/components/praisehub/admin-guard";
 import { EventForm } from "@/components/praisehub/event-form";
 
-export const metadata = { title: "Editar evento · PraiseHub Admin" };
+export const metadata = { title: "Editar evento · ADSA Reimberg Mídias Admin" };
 
 async function getDados(id: string) {
   const [evento, categorias] = await Promise.all([

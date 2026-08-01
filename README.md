@@ -1,6 +1,6 @@
-# PraiseHub · Central de Mídia ADSA Praise
+# ADSA Reimberg Mídias · Central de Mídia ADSA Reimberg
 
-> Aplicação web oficial para divulgação de cultos, armazenamento de artes e galeria de fotos da ADSA Praise.
+> Aplicação web oficial para divulgação de cultos, armazenamento de artes e galeria de fotos da ADSA Reimberg.
 
 [![Status](https://img.shields.io/badge/status-Fase%201%2B2%20entregue-blue)]()
 [![Stack](https://img.shields.io/badge/stack-Next.js%2016%20%7C%20TypeScript%20%7C%20Prisma%20%7C%20shadcn%2Fui-purple)]()
@@ -22,7 +22,7 @@
 
 ## Visão geral
 
-O PraiseHub é a fonte oficial dos materiais de mídia da ADSA Praise. Substitui o uso informal do WhatsApp como repositório de artes e fotos. A aplicação é dividida em duas experiências:
+O ADSA Reimberg Mídias é a fonte oficial dos materiais de mídia da ADSA Reimberg. Substitui o uso informal do WhatsApp como repositório de artes e fotos. A aplicação é dividida em duas experiências:
 
 - **Área pública** (`/`, `/eventos`, `/eventos/[slug]`, `/historico`): qualquer pessoa pode consultar o próximo culto, ver eventos anteriores e baixar materiais públicos.
 - **Área administrativa** (`/admin/*`): restrita à equipe de mídia. Permite criar/editar eventos, definir destaque, ajustar configurações da igreja e (em fases futuras) subir artes, gerenciar álbuns e aprovar contribuições.
@@ -155,4 +155,4 @@ Ver [`PROJECT_MEMORY.md`](./PROJECT_MEMORY.md).
 
 ---
 
-© ADSA Praise · PraiseHub
+© ADSA Reimberg · ADSA Reimberg Mídias

@@ -21,7 +21,7 @@ export function DashboardClient() {
       <CardContent className="space-y-3 text-sm text-muted-foreground">
         <p>
           Você está conectado como <strong className="text-foreground">{user.perfil}</strong>. Esta é a entrega
-          das Fases 1 e 2 do PraiseHub (Fundação + Eventos).
+          das Fases 1 e 2 da ADSA Reimberg Mídias (Fundação + Eventos).
         </p>
         <div className="flex flex-wrap gap-2 pt-1">
           <Button asChild size="sm" variant="outline">

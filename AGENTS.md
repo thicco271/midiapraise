@@ -1,12 +1,12 @@
-# AGENTS.md — PraiseHub
+# AGENTS.md — ADSA Reimberg Mídias
 
-> Central de Mídia ADSA Praise
+> Central de Mídia ADSA Reimberg
 
-Este arquivo orienta futuros agentes (humanos ou IA) que venham a trabalhar no projeto PraiseHub. Leia-o integralmente antes de qualquer alteração.
+Este arquivo orienta futuros agentes (humanos ou IA) que venham a trabalhar no projeto ADSA Reimberg Mídias. Leia-o integralmente antes de qualquer alteração.
 
 ## 1. Objetivo
 
-O PraiseHub é a fonte oficial dos materiais de mídia da ADSA Praise. Substitui o uso informal do WhatsApp como repositório de artes e fotos. A aplicação deve ser:
+O ADSA Reimberg Mídias é a fonte oficial dos materiais de mídia da ADSA Reimberg. Substitui o uso informal do WhatsApp como repositório de artes e fotos. A aplicação deve ser:
 
 - Persistente (dados e arquivos não somem após reload).
 - Segura por padrão (permissões verificadas no backend).

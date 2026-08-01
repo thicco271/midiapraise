@@ -2,7 +2,7 @@
 
 ## Visão geral
 
-O PraiseHub implementa RBAC (Role-Based Access Control) com 6 perfis. As permissões são verificadas SEMPRE no backend, nunca apenas por ocultação de botões no frontend.
+O ADSA Reimberg Mídias implementa RBAC (Role-Based Access Control) com 6 perfis. As permissões são verificadas SEMPRE no backend, nunca apenas por ocultação de botões no frontend.
 
 ## Perfis
 
