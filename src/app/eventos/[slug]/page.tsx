@@ -17,13 +17,13 @@ import {
   BookOpen,
   ChevronLeft,
   Download,
-  Image as ImageIcon,
-  Share2,
-  Info,
   CalendarHeart,
 } from "lucide-react";
 import { CopyLinkButton } from "@/components/praisehub/copy-link-button";
 import { ShareWhatsAppButton } from "@/components/praisehub/share-whatsapp-button";
+import { MediaGrid } from "@/components/praisehub/media-grid";
+import { getCurrentUser, canManageEvents } from "@/lib/session";
+import type { MediaAssetDTO, MediaType } from "@/types";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -34,6 +34,63 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: evento.tema ?? evento.descricao ?? `Detalhes do evento ${evento.nome}`,
   };
 }
+
+function mapAsset(a: any): MediaAssetDTO {
+  const versaoOficial = a.versoes?.find((v: any) => v.arquivoOficial) ?? a.versoes?.[0] ?? null;
+  return {
+    id: a.id,
+    eventoId: a.eventoId,
+    nome: a.nome,
+    tipo: a.tipo,
+    status: a.status,
+    visibilidade: a.visibilidade,
+    versaoAtual: a.versaoAtual,
+    textoDeDivulgacao: a.textoDeDivulgacao,
+    observacoes: a.observacoes,
+    quantidadeDownloads: a.quantidadeDownloads,
+    criadoEm: a.criadoEm instanceof Date ? a.criadoEm.toISOString() : a.criadoEm,
+    atualizadoEm: a.atualizadoEm instanceof Date ? a.atualizadoEm.toISOString() : a.atualizadoEm,
+    versaoOficial: versaoOficial
+      ? {
+          id: versaoOficial.id,
+          numeroDaVersao: versaoOficial.numeroDaVersao,
+          caminhoDoArquivo: versaoOficial.caminhoDoArquivo,
+          caminhoThumbnail: versaoOficial.caminhoThumbnail,
+          nomeOriginal: versaoOficial.nomeOriginal,
+          nomePadronizado: versaoOficial.nomePadronizado,
+          extensao: versaoOficial.extensao,
+          mimeType: versaoOficial.mimeType,
+          tamanho: versaoOficial.tamanho,
+          largura: versaoOficial.largura,
+          altura: versaoOficial.altura,
+          arquivoOficial: versaoOficial.arquivoOficial,
+          enviadoEm: versaoOficial.enviadoEm instanceof Date ? versaoOficial.enviadoEm.toISOString() : versaoOficial.enviadoEm,
+        }
+      : null,
+    versoes: (a.versoes ?? []).map((v: any) => ({
+      id: v.id,
+      numeroDaVersao: v.numeroDaVersao,
+      caminhoDoArquivo: v.caminhoDoArquivo,
+      caminhoThumbnail: v.caminhoThumbnail,
+      nomeOriginal: v.nomeOriginal,
+      nomePadronizado: v.nomePadronizado,
+      extensao: v.extensao,
+      mimeType: v.mimeType,
+      tamanho: v.tamanho,
+      largura: v.largura,
+      altura: v.altura,
+      arquivoOficial: v.arquivoOficial,
+      enviadoEm: v.enviadoEm instanceof Date ? v.enviadoEm.toISOString() : v.enviadoEm,
+    })),
+  };
+}
+
+const TIPOS: { tipo: MediaType; label: string }[] = [
+  { tipo: "whatsapp", label: "WhatsApp e Stories" },
+  { tipo: "rede_social", label: "Redes sociais" },
+  { tipo: "banner_telao", label: "Banner / Telão" },
+  { tipo: "outros", label: "Outros arquivos" },
+];
 
 export default async function EventoDetalhePage({
   params,
@@ -49,6 +106,26 @@ export default async function EventoDetalhePage({
   if (!evento || (evento.status !== "publicado" && evento.visibilidade !== "publico")) {
     notFound();
   }
+
+  // Busca mídias
+  const user = await getCurrentUser();
+  const isAdmin = !!user && canManageEvents(user.perfil);
+
+  const whereMedia: any = { eventoId: evento.id };
+  if (!isAdmin) {
+    whereMedia.AND = [{ status: "publicado" }, { visibilidade: "publico" }];
+  }
+
+  const assets = await db.mediaAsset.findMany({
+    where: whereMedia,
+    include: { versoes: { orderBy: { numeroDaVersao: "desc" } } },
+    orderBy: [{ tipo: "asc" }, { criadoEm: "desc" }],
+  });
+
+  const assetsPorTipo = (tipo: MediaType) =>
+    assets.filter((a) => a.tipo === tipo).map(mapAsset);
+
+  const totalArquivos = assets.length;
 
   return (
     <article className="praise-container py-6 sm:py-10">
@@ -104,39 +181,38 @@ export default async function EventoDetalhePage({
             </Card>
           )}
 
-          {/* Central de materiais (placeholder estruturado) */}
-          <section aria-label="Central de materiais" className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold text-foreground">Materiais</h2>
-              <span className="text-xs text-muted-foreground">
-                Pacotes completos em breve (Fase 3)
-              </span>
+          {/* Central de materiais — real */}
+          <section aria-label="Central de materiais" className="space-y-4">
+            <div className="flex items-center justify-between gap-2">
+              <div>
+                <h2 className="text-xl font-bold text-foreground">Materiais oficiais</h2>
+                <p className="text-xs text-muted-foreground">
+                  {totalArquivos > 0
+                    ? `${totalArquivos} arquivo${totalArquivos === 1 ? "" : "s"} disponíve${totalArquivos === 1 ? "l" : "is"}`
+                    : "Ainda não há materiais publicados para este evento."}
+                </p>
+              </div>
+              {isAdmin && (
+                <Button asChild size="sm" variant="outline">
+                  <Link href={`/admin/eventos/${evento.id}`}>
+                    <Download className="h-4 w-4" />
+                    Gerenciar arquivos
+                  </Link>
+                </Button>
+              )}
             </div>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {[
-                { nome: "WhatsApp e Stories", status: "pendente" },
-                { nome: "Redes sociais", status: "pendente" },
-                { nome: "Banner / Telão", status: "pendente" },
-              ].map((m) => (
-                <Card key={m.nome} className="praise-card">
-                  <CardContent className="flex items-start gap-3 p-4">
-                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                      <ImageIcon className="h-5 w-5" aria-hidden="true" />
-                    </span>
-                    <div className="flex-1">
-                      <p className="text-sm font-semibold text-foreground">{m.nome}</p>
-                      <p className="mt-1 inline-flex items-center gap-1 text-xs text-amber-700">
-                        <Info className="h-3 w-3" aria-hidden="true" />
-                        {m.status === "pendente" ? "Pendente" : "Disponível"}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-            <p className="rounded-md border border-dashed border-border bg-muted/40 p-3 text-xs text-muted-foreground">
-              Os uploads de artes, versionamento, aprovação e download em ZIP serão entregues na <strong>Fase 3</strong> da especificação. Já é possível visualizar e compartilhar o evento.
-            </p>
+
+            {TIPOS.map(({ tipo, label }) => {
+              const lista = assetsPorTipo(tipo);
+              return (
+                <div key={tipo} className="space-y-2">
+                  <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                    {label}
+                  </h3>
+                  <MediaGrid assets={lista} />
+                </div>
+              );
+            })}
           </section>
         </div>
 
@@ -192,10 +268,6 @@ export default async function EventoDetalhePage({
             <CardContent className="space-y-2">
               <CopyLinkButton url={`/eventos/${evento.slug}`} className="w-full justify-start praise-touch" />
               <ShareWhatsAppButton slug={evento.slug} nome={evento.nome} className="w-full justify-start praise-touch" />
-              <Button variant="outline" className="w-full justify-start praise-touch" disabled>
-                <Download className="h-4 w-4" />
-                Baixar todas as artes (Fase 3)
-              </Button>
             </CardContent>
           </Card>
 

@@ -33,6 +33,8 @@ model Profile {
   auditLogs            AuditLog[]
   approvals            Approval[]
   feedbacks            ProductFeedback[]
+  mediaEnviados        MediaAsset[]  @relation("MediaSender")
+  mediaAprovados       MediaAsset[]  @relation("MediaApprover")
 
   @@index([perfil])
   @@index([status])
@@ -110,6 +112,7 @@ model Event {
   categoria      EventCategory? @relation(fields: [categoriaId], references: [id])
   criadoPor      Profile?       @relation("EventCreator", fields: [criadoPorId], references: [id])
   atualizadoPor  Profile?       @relation("EventUpdater", fields: [atualizadoPorId], references: [id])
+  mediaAssets    MediaAsset[]
 
   @@index([status])
   @@index([visibilidade])
@@ -167,4 +170,61 @@ model ProductFeedback {
   usuario        Profile? @relation(fields: [usuarioId], references: [id])
 
   @@index([status])
+}
+
+// ============================================================
+// CENTRAL DE ARTES (Fase 3)
+// ============================================================
+
+model MediaAsset {
+  id                String   @id @default(cuid())
+  eventoId          String
+  nome              String
+  tipo              String   // whatsapp | rede_social | banner_telao | outros
+  status            String   @default("rascunho")
+  // rascunho | em_aprovacao | aprovado | publicado | arquivado
+  visibilidade      String   @default("publico") // publico | privado
+  versaoAtual       Int      @default(1)
+  textoDeDivulgacao String?
+  observacoes       String?
+  enviadoPorId      String?
+  aprovadoPorId     String?
+  aprovadoEm        DateTime?
+  publicadoEm       DateTime?
+  quantidadeDownloads Int    @default(0)
+  criadoEm          DateTime @default(now())
+  atualizadoEm      DateTime @updatedAt
+
+  evento            Event    @relation(fields: [eventoId], references: [id], onDelete: Cascade)
+  enviadoPor        Profile? @relation("MediaSender", fields: [enviadoPorId], references: [id])
+  aprovadoPor       Profile? @relation("MediaApprover", fields: [aprovadoPorId], references: [id])
+  versoes           MediaVersion[]
+
+  @@index([eventoId])
+  @@index([tipo])
+  @@index([status])
+}
+
+model MediaVersion {
+  id                String   @id @default(cuid())
+  mediaAssetId      String
+  numeroDaVersao    Int
+  caminhoDoArquivo  String   // caminho relativo em public/uploads/...
+  caminhoThumbnail  String?  // versão miniatura para galeria
+  nomeOriginal      String
+  nomePadronizado   String
+  extensao          String
+  mimeType          String
+  tamanho           Int      // bytes
+  largura           Int?
+  altura            Int?
+  checksum          String?
+  arquivoOficial    Boolean  @default(false)
+  enviadoPorId      String?
+  enviadoEm         DateTime @default(now())
+
+  mediaAsset        MediaAsset @relation(fields: [mediaAssetId], references: [id], onDelete: Cascade)
+
+  @@index([mediaAssetId])
+  @@index([arquivoOficial])
 }

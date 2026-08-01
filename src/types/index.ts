@@ -91,6 +91,41 @@ export interface DashboardData {
   totalRascunhos: number;
 }
 
+export type MediaType = "whatsapp" | "rede_social" | "banner_telao" | "outros";
+
+export interface MediaVersionDTO {
+  id: string;
+  numeroDaVersao: number;
+  caminhoDoArquivo: string;
+  caminhoThumbnail?: string | null;
+  nomeOriginal: string;
+  nomePadronizado: string;
+  extensao: string;
+  mimeType: string;
+  tamanho: number;
+  largura?: number | null;
+  altura?: number | null;
+  arquivoOficial: boolean;
+  enviadoEm: string;
+}
+
+export interface MediaAssetDTO {
+  id: string;
+  eventoId: string;
+  nome: string;
+  tipo: MediaType;
+  status: "rascunho" | "em_aprovacao" | "aprovado" | "publicado" | "arquivado";
+  visibilidade: "publico" | "privado";
+  versaoAtual: number;
+  textoDeDivulgacao?: string | null;
+  observacoes?: string | null;
+  quantidadeDownloads: number;
+  criadoEm: string;
+  atualizadoEm: string;
+  versaoOficial?: MediaVersionDTO | null;
+  versoes: MediaVersionDTO[];
+}
+
 export interface ApiResult<T> {
   ok: boolean;
   data?: T;
