@@ -1,0 +1,170 @@
+// PraiseHub - Prisma Schema
+// Central de Mídia ADSA Praise
+// Stack: SQLite via Prisma Client
+// Fases cobertas: Fase 1 (Fundação) + Fase 2 (Eventos)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// AUTENTICAÇÃO E USUÁRIOS
+// ============================================================
+
+model Profile {
+  id            String   @id @default(cuid())
+  nome          String
+  email         String   @unique
+  senhaHash     String
+  avatar        String?
+  perfil        String   @default("equipe_midia") // administrador | editor | aprovador | fotografo | equipe_midia | visitante
+  status        String   @default("ativo") // ativo | suspenso | inativo
+  ultimoAcesso  DateTime?
+  criadoEm      DateTime @default(now())
+  atualizadoEm  DateTime @updatedAt
+
+  eventosCriados       Event[]       @relation("EventCreator")
+  eventosAtualizados   Event[]       @relation("EventUpdater")
+  auditLogs            AuditLog[]
+  approvals            Approval[]
+  feedbacks            ProductFeedback[]
+
+  @@index([perfil])
+  @@index([status])
+}
+
+// ============================================================
+// CONFIGURAÇÕES DA IGREJA
+// ============================================================
+
+model ChurchSettings {
+  id                  String   @id @default(cuid())
+  nomeDaIgreja        String   @default("ADSA Praise")
+  nomeDaAplicacao     String   @default("PraiseHub")
+  subtitulo           String   @default("Central de Mídia ADSA Praise")
+  textoPrincipal      String   @default("Artes, fotos e materiais oficiais da ADSA Praise, organizados em um só lugar.")
+  textoComplementar   String   @default("Consulte o próximo culto, encontre as versões atualizadas e baixe os materiais necessários para divulgação e utilização na igreja.")
+  logo                String?
+  icone               String?
+  imagemDeCapa        String?
+  corPrimaria         String   @default("#0F2A5C") // azul profundo
+  corDestaque         String   @default("#C9A227") // dourado suave
+  endereco            String?
+  fusoHorario         String   @default("America/Sao_Paulo")
+  configuracoesAcesso String   @default("{}") // JSON livre
+  atualizadoEm        DateTime @updatedAt
+}
+
+// ============================================================
+// CATEGORIAS DE EVENTOS
+// ============================================================
+
+model EventCategory {
+  id    String  @id @default(cuid())
+  nome  String  @unique
+  icone String?
+  ativo Boolean @default(true)
+  ordem Int     @default(0)
+
+  eventos Event[]
+
+  @@index([ativo])
+}
+
+// ============================================================
+// EVENTOS / CULTOS
+// ============================================================
+
+model Event {
+  id              String   @id @default(cuid())
+  nome            String
+  slug            String   @unique
+  categoriaId     String?
+  descricao       String?
+  data            DateTime
+  horarioInicio   String   // "19:30"
+  horarioFim      String?
+  local           String?
+  endereco        String?
+  tema            String?
+  versiculo       String?
+  pregador        String?
+  ministerio      String?
+  capa            String?
+  status          String   @default("rascunho")
+  // rascunho | em_producao | aguardando_aprovacao | ajustes_solicitados | aprovado | programado | publicado | encerrado | arquivado | cancelado
+  visibilidade   String   @default("publico") // publico | somente_equipe | somente_autenticados | privado
+  destaqueManual Boolean  @default(false)
+  publicadoEm    DateTime?
+  observacoesInternas String?
+  criadoPorId    String?
+  criadoEm       DateTime @default(now())
+  atualizadoPorId String?
+  atualizadoEm   DateTime @updatedAt
+
+  categoria      EventCategory? @relation(fields: [categoriaId], references: [id])
+  criadoPor      Profile?       @relation("EventCreator", fields: [criadoPorId], references: [id])
+  atualizadoPor  Profile?       @relation("EventUpdater", fields: [atualizadoPorId], references: [id])
+
+  @@index([status])
+  @@index([visibilidade])
+  @@index([data])
+  @@index([destaqueManual])
+}
+
+// ============================================================
+// APROVAÇÕES, AUDITORIA, FEEDBACK
+// ============================================================
+
+model Approval {
+  id            String   @id @default(cuid())
+  tipoConteudo  String   // evento | media_asset | album_photo
+  conteudoId    String
+  versao        Int      @default(1)
+  decisao       String   // aprovado | reprovado | ajustes
+  comentario    String?
+  usuarioId     String?
+  criadoEm      DateTime @default(now())
+
+  usuario       Profile? @relation(fields: [usuarioId], references: [id])
+
+  @@index([tipoConteudo, conteudoId])
+}
+
+model AuditLog {
+  id              String   @id @default(cuid())
+  usuarioId       String?
+  acao            String   // criar | atualizar | publicar | arquivar | restaurar | excluir
+  entidade        String   // evento | categoria | profile | church_settings
+  entidadeId      String?
+  descricao       String
+  dadosAnteriores String?  // JSON
+  dadosPosteriores String? // JSON
+  ip              String?
+  criadoEm        DateTime @default(now())
+
+  usuario         Profile? @relation(fields: [usuarioId], references: [id])
+
+  @@index([entidade, entidadeId])
+  @@index([criadoEm])
+}
+
+model ProductFeedback {
+  id             String   @id @default(cuid())
+  usuarioId      String?
+  categoria      String   // sugestao | erro | melhoria | dificuldade
+  descricao      String
+  status         String   @default("pendente") // pendente | em_analise | aprovado | rejeitado
+  decisaoAdmin   String?
+  criadoEm       DateTime @default(now())
+  analisadoEm    DateTime?
+
+  usuario        Profile? @relation(fields: [usuarioId], references: [id])
+
+  @@index([status])
+}

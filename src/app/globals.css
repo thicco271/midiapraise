@@ -1,0 +1,197 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   PraiseHub - Design System
+   Paleta: Azul profundo + Branco + Dourado suave + Cinzas neutros
+   ============================================================ */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  /* Tokens semânticos PraiseHub */
+  --color-praise-deep: var(--praise-deep);
+  --color-praise-gold: var(--praise-gold);
+  --color-praise-soft: var(--praise-soft);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.625rem;
+
+  /* Paleta PraiseHub (Light) */
+  --praise-deep: #0F2A5C;     /* azul profundo - cor principal */
+  --praise-gold: #C9A227;     /* dourado suave - destaque */
+  --praise-soft: #F6F2E7;     /* creme claro - realce suave */
+
+  --background: #FFFFFF;
+  --foreground: #1A2238;
+  --card: #FFFFFF;
+  --card-foreground: #1A2238;
+  --popover: #FFFFFF;
+  --popover-foreground: #1A2238;
+  --primary: #0F2A5C;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F6F2E7;
+  --secondary-foreground: #1A2238;
+  --muted: #F4F5F7;
+  --muted-foreground: #5B6478;
+  --accent: #EDE3C2;
+  --accent-foreground: #1A2238;
+  --destructive: #B91C1C;
+  --border: #E2E6EE;
+  --input: #E2E6EE;
+  --ring: #C9A227;
+  --chart-1: #0F2A5C;
+  --chart-2: #C9A227;
+  --chart-3: #2F7A5D;
+  --chart-4: #B58629;
+  --chart-5: #5B6478;
+  --sidebar: #FAFBFC;
+  --sidebar-foreground: #1A2238;
+  --sidebar-primary: #0F2A5C;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F6F2E7;
+  --sidebar-accent-foreground: #1A2238;
+  --sidebar-border: #E2E6EE;
+  --sidebar-ring: #C9A227;
+}
+
+.dark {
+  --background: #0B1530;
+  --foreground: #F4F5F7;
+  --card: #122047;
+  --card-foreground: #F4F5F7;
+  --popover: #122047;
+  --popover-foreground: #F4F5F7;
+  --primary: #F4F5F7;
+  --primary-foreground: #0B1530;
+  --secondary: #1B2A55;
+  --secondary-foreground: #F4F5F7;
+  --muted: #1B2A55;
+  --muted-foreground: #A4ABC0;
+  --accent: #2B3D6E;
+  --accent-foreground: #F4F5F7;
+  --destructive: #F87171;
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 18%);
+  --ring: #C9A227;
+  --chart-1: #6B8DD6;
+  --chart-2: #E0C56A;
+  --chart-3: #4FB38A;
+  --chart-4: #D9A85F;
+  --chart-5: #A4ABC0;
+  --sidebar: #0B1530;
+  --sidebar-foreground: #F4F5F7;
+  --sidebar-primary: #C9A227;
+  --sidebar-primary-foreground: #0B1530;
+  --sidebar-accent: #1B2A55;
+  --sidebar-accent-foreground: #F4F5F7;
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: #C9A227;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "kern" 1;
+    text-rendering: optimizeLegibility;
+  }
+  /* Foco visível e consistente */
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+  /* Respeitar usuários que preferem movimento reduzido */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Container centralizado e responsivo */
+  .praise-container {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+  .praise-container-narrow {
+    @apply mx-auto w-full max-w-3xl px-4 sm:px-6;
+  }
+  /* Tipografia ministerial */
+  .praise-title {
+    @apply font-serif text-2xl font-bold tracking-tight text-primary sm:text-3xl lg:text-4xl;
+  }
+  .praise-subtitle {
+    @apply text-base text-muted-foreground sm:text-lg;
+  }
+  .praise-eyebrow {
+    @apply text-xs font-semibold uppercase tracking-widest text-praise-gold;
+  }
+  /* Botão com toque confortável (48px) */
+  .praise-touch {
+    @apply min-h-[48px] min-w-[48px];
+  }
+  /* Cartão suave com borda sutil */
+  .praise-card {
+    @apply rounded-xl border border-border bg-card shadow-sm transition-shadow hover:shadow-md;
+  }
+  /* Esconde scrollbar mas mantém scroll */
+  .praise-no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .praise-no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+}
+
+/* Fonte serif para títulos ministeriais via fallback quando Geist não carrega */
+.font-serif {
+  font-family: var(--font-geist-sans), Georgia, "Times New Roman", serif;
+}

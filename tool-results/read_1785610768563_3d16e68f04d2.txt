@@ -1,0 +1,240 @@
+     1→{
+     2→  "status": "success",
+     3→  "data": {
+     4→    "total_pages": 46,
+     5→    "extracted_pages": 46,
+     6→    "total_chars": 40542,
+     7→    "pages": [
+     8→      {
+     9→        "page": 1,
+    10→        "chars": 1497,
+    11→        "text": "PRAISEHUB — SPEC DRIVEN MASTER V2.0\nCentral de Mídia ADSA Praise\n0. INSTRUÇÃO MESTRA AO AGENTE\nVocê atuará como uma equipe completa de produto, design, engenharia, segurança e qualidade para\nconstruir uma aplicação chamada:\nPraiseHub\nCentral de Mídia ADSA Praise\nA aplicação será a fonte oficial para:\n• Divulgação do próximo culto.\n• Armazenamento das artes oficiais.\n• Download de artes para WhatsApp e redes sociais.\n• Download de banners e imagens para telão.\n• Consulta de cultos anteriores.\n• Criação de álbuns de fotos por culto e por data.\n• Envio colaborativo de fotos.\n• Administração de eventos, datas, horários, imagens e permissões.\n• Registro de quando cada material foi enviado, aprovado e publicado.\nNão entregue apenas uma demonstração visual.\nNão produza uma interface com botões falsos, dados simulados permanentes, uploads que\ndesaparecem após atualizar a página ou funções administrativas sem persistência.\nA aplicação somente será considerada entregue quando possuir:\n1. Interface pública funcional.\n2. Área administrativa funcional.\n3. Banco de dados persistente.\n4. Armazenamento persistente de imagens e arquivos.\n5. Controle de usuários e permissões.\n6. Upload e download reais.\n7. Funcionamento responsivo em celular e computador.\n8. Fluxo de publicação e aprovação.\n9. Galeria de fotos.\n10. Testes dos principais fluxos.\n11. Documentação do projeto.\n12. Memória persistente das regras e decisões.\n13. Histórico de alterações.\n14. Código versionado em repositório Git.\n1"
+    12→      },
+    13→      {
+    14→        "page": 2,
+    15→        "chars": 1113,
+    16→        "text": "1. FORMA DE EXECUÇÃO SPEC DRIVEN\nAntes de escrever código, execute o projeto segundo esta sequência:\n1. Constituição do projeto.\n2. Especificação funcional.\n3. Identificação de lacunas.\n4. Plano técnico.\n5. Modelo de dados.\n6. Design system.\n7. Lista de tarefas.\n8. Análise de consistência.\n9. Implementação incremental.\n10. Testes.\n11. Revisão de segurança.\n12. Revisão visual e responsiva.\n13. Convergência entre código e especificação.\n14. Documentação final.\nCaso o ambiente tenha suporte ao GitHub Spec Kit, utilizar o fluxo equivalente a:\n• constitution\n• specify\n• clarify\n• plan\n• tasks\n• analyze\n• implement\n• checklist\n• converge\nCaso esses comandos não estejam disponíveis, reproduzir o mesmo processo manualmente.\nÉ proibido iniciar a implementação completa antes de registrar:\n• O que será construído.\n• Por que será construído.\n• Quais são as regras obrigatórias.\n• Qual será a arquitetura.\n• Como a aplicação será testada.\n• Como será determinado que a entrega terminou.\n2. CONSTITUIÇÃO DO PROJETO\nAs regras desta seção são permanentes e não podem ser removidas ou flexibilizadas silenciosamente.\n2"
+    17→      },
+    18→      {
+    19→        "page": 3,
+    20→        "chars": 1222,
+    21→        "text": "2.1 Fonte oficial\nO PraiseHub será a fonte oficial dos materiais de mídia da ADSA Praise.\nO WhatsApp será utilizado para comunicação e compartilhamento de links, mas não será considerado\nrepositório oficial.\n2.2 Administração sem necessidade de código\nO administrador deverá conseguir, pela interface:\n• Criar um culto.\n• Alterar a data.\n• Alterar o horário.\n• Alterar o nome do evento.\n• Informar o pregador.\n• Informar o tema.\n• Subir a arte de WhatsApp.\n• Subir a arte de rede social.\n• Subir o banner ou imagem de telão.\n• Criar o álbum de fotos.\n• Publicar ou retirar um conteúdo.\n• Definir qual evento aparecerá como próximo culto.\nNenhuma dessas operações poderá exigir edição manual de código ou alteração direta no GitHub.\n2.3 Mobile-first\nA aplicação deverá ser projetada primeiramente para celular e depois adaptada para telas maiores.\nO fato de uma página abrir no celular não é suficiente para classificá-la como responsiva.\nEla deverá ser confortável para:\n• Navegar.\n• Ler.\n• Fazer upload.\n• Selecionar fotos.\n• Baixar arquivos.\n• Copiar links.\n• Preencher formulários.\n• Administrar eventos.\n2.4 Persistência real\nDados e arquivos não poderão desaparecer após:\n• Atualizar a página.\n• Fechar o navegador.\n3"
+    22→      },
+    23→      {
+    24→        "page": 4,
+    25→        "chars": 1145,
+    26→        "text": "• Trocar de aparelho.\n• Reiniciar a aplicação.\n• Publicar uma nova versão do sistema.\n2.5 Segurança por padrão\nConteúdos privados deverão permanecer privados.\nPermissões deverão ser verificadas no backend e não apenas por ocultação de botões.\n2.6 Preservação de conteúdo\nAtualizações da aplicação não poderão:\n• Apagar eventos existentes.\n• Apagar artes existentes.\n• Apagar álbuns.\n• Perder usuários.\n• Sobrescrever configurações sem migração.\n• Invalidar links sem justificativa.\n2.7 Acessibilidade\nA interface deverá possuir:\n• Contraste adequado.\n• Navegação por teclado.\n• Foco visível.\n• Textos alternativos.\n• Botões identificáveis.\n• Mensagens de erro compreensíveis.\n• Elementos que não dependam exclusivamente de cores.\n2.8 Qualidade verificável\nExpressões vagas como “interface bonita”, “boa performance” ou “código limpo” não serão\nconsideradas critérios suficientes.\nCada requisito deverá possuir uma forma objetiva de validação.\n2.9 Sem funções decorativas\nTodo botão visível deverá executar uma ação real.\nFunções futuras ainda não implementadas deverão ser removidas da interface ou claramente\nidentificadas como indisponíveis.\n4"
+    27→      },
+    28→      {
+    29→        "page": 5,
+    30→        "chars": 1147,
+    31→        "text": "2.10 Simplicidade para o usuário\nA área pública deve ser extremamente simples.\nUma pessoa deverá conseguir encontrar a arte do próximo culto em poucos segundos, mesmo sem\nconhecimento técnico.\n3. ORGANIZAÇÃO DOS AGENTES\nCaso a plataforma permita múltiplos agentes ou subagentes, criar os seguintes papéis.\nCaso não permita, o agente principal deverá executar cada papel sequencialmente.\n3.1 Agente Orquestrador\nResponsável por:\n• Coordenar os demais agentes.\n• Garantir aderência à especificação.\n• Controlar dependências.\n• Impedir alterações conflitantes.\n• Consolidar os resultados.\n• Determinar a ordem de execução.\n• Executar a convergência final.\nO Orquestrador não deverá aceitar uma entrega somente porque a interface está visualmente pronta.\n3.2 Agente de Produto e Especificação\nResponsável por:\n• Manter os requisitos.\n• Validar histórias de usuário.\n• Registrar critérios de aceite.\n• Identificar lacunas.\n• Evitar aumento desnecessário de escopo.\n• Garantir que a aplicação resolva a dor original.\n3.3 Agente de UX e Design Visual\nResponsável por:\n• Arquitetura da informação.\n• Design system.\n• Cores.\n• Tipografia.\n• Espaçamentos.\n5"
+    32→      },
+    33→      {
+    34→        "page": 6,
+    35→        "chars": 904,
+    36→        "text": "• Componentes.\n• Estados das telas.\n• Experiência mobile.\n• Experiência desktop.\n• Acessibilidade.\n• Consistência visual.\nDeverá utilizar princípios do UI/UX Pro Max ou regras equivalentes incorporadas nesta especificação.\n3.4 Agente Frontend Responsivo\nResponsável por:\n• Componentes da interface.\n• Navegação.\n• Formulários.\n• Comportamento responsivo.\n• Estados de carregamento.\n• Estados de erro.\n• Feedback de ações.\n• Integração com APIs.\n• Otimização da experiência no celular.\n3.5 Agente Backend e Dados\nResponsável por:\n• Banco de dados.\n• APIs.\n• Regras de negócio.\n• Autenticação.\n• Autorização.\n• Auditoria.\n• Controle de versões.\n• Publicação.\n• Arquivamento.\n• Integridade dos dados.\n3.6 Agente de Mídia e Armazenamento\nResponsável por:\n• Upload.\n• Download.\n• Armazenamento.\n• Geração de miniaturas.\n• Otimização de imagens.\n• Pacotes ZIP.\n• Controle de formatos.\n• Tratamento de falhas.\n6"
+    37→      },
+    38→      {
+    39→        "page": 7,
+    40→        "chars": 969,
+    41→        "text": "• Remoção de metadados sensíveis.\n• Links públicos ou protegidos.\n3.7 Agente de Segurança e Privacidade\nResponsável por:\n• Permissões.\n• Proteção de arquivos.\n• Validação de uploads.\n• Sessões.\n• Links temporários.\n• Privacidade das fotos.\n• Proteção de conteúdos envolvendo crianças.\n• Registro de ações administrativas.\n• Prevenção de acesso direto não autorizado.\n3.8 Agente de Qualidade\nResponsável por:\n• Testes unitários.\n• Testes de integração.\n• Testes ponta a ponta.\n• Testes de responsividade.\n• Testes em navegadores diferentes.\n• Testes de acessibilidade.\n• Testes de desempenho.\n• Registro de evidências.\n3.9 Agente Revisor e Convergente\nResponsável por comparar:\n• Especificação.\n• Plano.\n• Tarefas.\n• Código.\n• Banco de dados.\n• Interface.\n• Testes.\n• Documentação.\nQualquer requisito não implementado deverá voltar para a lista de tarefas.\n4. MEMÓRIA E RETROALIMENTAÇÃO DO PROJETO\nA aplicação e o agente deverão possuir memória de projeto estruturada.\n7"
+    42→      },
+    43→      {
+    44→        "page": 8,
+    45→        "chars": 924,
+    46→        "text": "Não confiar apenas no histórico da conversa.\n4.1 Arquivos obrigatórios\nCriar e manter:\n• AGENTS.md\n• README.md\n• CHANGELOG.md\n• PROJECT_MEMORY.md\n• docs/product.md\n• docs/architecture.md\n• docs/design-system.md\n• docs/permissions.md\n• docs/storage.md\n• docs/privacy.md\n• docs/testing.md\n• docs/operations.md\n• docs/decisions/\n• specs/\n• tasks/\n4.2 AGENTS.md\nO arquivo AGENTS.md deverá informar aos futuros agentes:\n• Objetivo do PraiseHub.\n• Estrutura do projeto.\n• Comandos de instalação.\n• Comandos de execução.\n• Comandos de teste.\n• Padrões de código.\n• Regras de segurança.\n• Regras de design.\n• Arquivos que não podem ser apagados.\n• Fluxo de banco de dados.\n• Como realizar migrações.\n• Como publicar.\n• Como validar alterações.\n• Como atualizar a documentação.\n4.3 Memória de instruções\nAs regras permanentes deverão ficar em documentos controlados pelo administrador.\nExemplos:\n• Mobile-first.\n• Não apagar dados.\n8"
+    47→      },
+    48→      {
+    49→        "page": 9,
+    50→        "chars": 1155,
+    51→        "text": "• Não publicar fotos automaticamente.\n• Utilizar a paleta definida.\n• Exigir aprovação antes da publicação.\n• Manter histórico das versões.\n4.4 Memória de aprendizado\nRegistrar separadamente:\n• Problemas encontrados.\n• Soluções aplicadas.\n• Decisões técnicas.\n• Preferências aprovadas.\n• Erros recorrentes.\n• Melhorias sugeridas.\n• Resultado de testes.\nAprendizados não poderão modificar automaticamente as regras permanentes.\n4.5 Processo de retroalimentação\nAntes de cada alteração, o agente deverá:\n1. Ler o AGENTS.md .\n2. Ler a especificação ativa.\n3. Ler as decisões relacionadas.\n4. Ler as regras do módulo alterado.\n5. Verificar os testes existentes.\nApós cada alteração, deverá:\n1. Atualizar testes.\n2. Executar os testes.\n3. Atualizar o CHANGELOG.md .\n4. Registrar decisões relevantes.\n5. Atualizar a documentação afetada.\n6. Verificar se a especificação continua verdadeira.\n7. Registrar pendências.\n8. Executar a convergência.\n4.6 Feedback dos usuários\nCriar no banco uma área para:\n• Sugestões.\n• Erros encontrados.\n• Solicitações de melhoria.\n• Dificuldades de utilização.\nO feedback deverá ficar como pendente até análise do administrador.\n9"
+    52→      },
+    53→      {
+    54→        "page": 10,
+    55→        "chars": 1000,
+    56→        "text": "Somente feedbacks aprovados poderão ser transformados em:\n• Nova regra.\n• Nova tarefa.\n• Alteração de design.\n• Mudança funcional.\nA aplicação não deverá alterar o próprio comportamento automaticamente com base em qualquer\ncomentário recebido.\n4.7 Proteção dos dados na memória\nNão utilizar fotos, dados pessoais ou arquivos enviados pelos usuários para treinamento automático de\nmodelos.\nNão registrar senhas, tokens ou chaves em arquivos de memória.\n5. VISÃO DO PRODUTO\nO PraiseHub será um portal web responsivo dividido em duas experiências.\n5.1 Área pública\nVoltada para:\n• Membros da mídia.\n• Liderança.\n• Pessoas responsáveis pela divulgação.\n• Membros da igreja.\n• Visitantes, quando o conteúdo for público.\nDeverá permitir consultar e baixar materiais sem conhecimento técnico.\n5.2 Área administrativa\nVoltada para:\n• Administrador principal.\n• Editores.\n• Responsáveis por fotografias.\n• Aprovadores.\n• Colaboradores autorizados.\nDeverá permitir a gestão completa dos eventos e materiais.\n10"
+    57→      },
+    58→      {
+    59→        "page": 11,
+    60→        "chars": 831,
+    61→        "text": "6. PÚBLICOS E PERFIS\n6.1 Administrador principal\nPode:\n• Administrar toda a aplicação.\n• Criar e editar eventos.\n• Alterar datas e horários.\n• Definir o próximo culto.\n• Fazer upload de qualquer material.\n• Aprovar e publicar.\n• Administrar usuários.\n• Alterar configurações.\n• Consultar auditoria.\n• Restaurar conteúdos.\n• Gerar backups.\n• Excluir definitivamente.\n6.2 Editor de mídia\nPode:\n• Criar eventos.\n• Editar eventos.\n• Fazer upload de artes.\n• Criar álbuns.\n• Enviar conteúdo para aprovação.\n• Editar textos de divulgação.\nNão pode:\n• Alterar administradores.\n• Alterar regras gerais de segurança.\n• Excluir definitivamente registros.\n• Publicar sem aprovação, quando o fluxo de aprovação estiver ativado.\n6.3 Aprovador\nPode:\n• Revisar artes.\n• Aprovar.\n• Reprovar.\n• Solicitar ajustes.\n• Publicar conteúdos aprovados.\n11"
+    62→      },
+    63→      {
+    64→        "page": 12,
+    65→        "chars": 962,
+    66→        "text": "6.4 Fotógrafo ou colaborador\nPode:\n• Criar rascunhos de álbuns.\n• Enviar fotos.\n• Informar data e evento.\n• Acompanhar o próprio envio.\nAs fotos deverão entrar em fila de revisão.\n6.5 Equipe de mídia\nPode:\n• Consultar artes.\n• Baixar arquivos.\n• Consultar álbuns liberados para a equipe.\n• Copiar links.\n• Consultar histórico.\n6.6 Visitante público\nPode:\n• Consultar eventos publicados.\n• Baixar artes públicas.\n• Visualizar álbuns públicos.\n• Utilizar links de compartilhamento.\n6.7 Convidado para upload\nO administrador poderá gerar um link específico para um evento.\nEsse link permitirá que uma pessoa envie fotos sem receber acesso administrativo.\nO link deverá possuir:\n• Evento vinculado.\n• Data de expiração.\n• Limite de arquivos.\n• Limite de tamanho.\n• Possibilidade de revogação.\n• Código seguro.\n• Aviso de privacidade.\n• Campo de identificação do colaborador.\n• Aceite das regras de envio.\nTodas as fotos enviadas por esse link deverão entrar como:\n12"
+    67→      },
+    68→      {
+    69→        "page": 13,
+    70→        "chars": 952,
+    71→        "text": "Aguardando revisão\nNenhuma foto colaborativa poderá ser publicada automaticamente.\n7. PÁGINA INICIAL PÚBLICA\n7.1 Destaque do próximo culto\nA parte principal da página deverá exibir:\n• Imagem de destaque.\n• Nome do culto.\n• Data.\n• Dia da semana.\n• Horário.\n• Local.\n• Tema.\n• Pregador ou responsável, quando informado.\n• Botão “Ver materiais”.\n• Botão “Baixar artes”.\n• Botão “Copiar link”.\n• Identificação “Material oficial”.\n7.2 Definição automática do próximo culto\nPor padrão, o próximo culto será:\n• O evento publicado.\n• Com data e horário futuros.\n• Mais próximo da data atual.\nO administrador poderá marcar manualmente um evento como destaque.\nA marcação manual terá prioridade sobre o cálculo automático.\n7.3 Situação sem próximo culto\nQuando não existir evento futuro publicado, mostrar:\nAgenda em atualização\nTambém poderão ser exibidos:\n• Último culto.\n• Materiais recentes.\n• Galeria mais recente.\nNão deixar a página quebrada ou vazia.\n13"
+    72→      },
+    73→      {
+    74→        "page": 14,
+    75→        "chars": 749,
+    76→        "text": "7.4 Conteúdo da semana\nExibir uma seção com:\n• Eventos dos próximos sete dias.\n• Artes recentemente publicadas.\n• Álbuns recentes.\n• Comunicados ativos.\n7.5 Atalhos principais\nCriar botões para:\n• Próximo culto.\n• Artes oficiais.\n• Banner e telão.\n• Galeria de fotos.\n• Histórico.\n8. MÓDULO DE EVENTOS E CULTOS\n8.1 Informações do evento\nCada evento deverá possuir:\n• Identificador único.\n• Nome.\n• Categoria.\n• Data.\n• Horário inicial.\n• Horário final opcional.\n• Local.\n• Endereço opcional.\n• Tema.\n• Versículo opcional.\n• Pregador ou responsável.\n• Ministério.\n• Descrição.\n• Imagem de capa.\n• Status.\n• Visibilidade.\n• Destaque manual.\n• Data de publicação.\n• Observações internas.\n• Criado por.\n• Criado em.\n• Atualizado por.\n• Atualizado em.\n14"
+    77→      },
+    78→      {
+    79→        "page": 15,
+    80→        "chars": 638,
+    81→        "text": "• Link permanente.\n8.2 Categorias iniciais\nCriar:\n• Culto de Celebração.\n• Culto da Família.\n• Santa Ceia.\n• Escola Bíblica Dominical.\n• Quarta Profética.\n• Campanha.\n• Evento de Louvor.\n• ADSA Praise.\n• ADSA Kids.\n• CIADSA.\n• JUADSA.\n• Mulheres.\n• Jovens.\n• Crianças.\n• Conferência.\n• Festividade.\n• Ensaio.\n• Comunicado.\n• Institucional.\n• Outro.\nO administrador poderá criar e editar categorias.\n8.3 Status\nUtilizar:\n• Rascunho.\n• Em produção.\n• Aguardando aprovação.\n• Ajustes solicitados.\n• Aprovado.\n• Programado.\n• Publicado.\n• Encerrado.\n• Arquivado.\n• Cancelado.\n8.4 Duplicação de eventos\nPermitir duplicar um evento anterior.\n15"
+    82→      },
+    83→      {
+    84→        "page": 16,
+    85→        "chars": 796,
+    86→        "text": "Ao duplicar:\n• Copiar estrutura.\n• Copiar categoria.\n• Copiar horários, se solicitado.\n• Não copiar automaticamente fotos.\n• Não publicar automaticamente.\n• Não reutilizar artes antigas como versão oficial.\n• Permitir utilizar artes anteriores como referência.\n8.5 Eventos recorrentes\nPermitir recorrência:\n• Semanal.\n• Quinzenal.\n• Mensal.\n• Datas personalizadas.\nCada ocorrência deverá se transformar em um evento independente para permitir artes e fotos\npróprias.\n9. CENTRAL DE ARTES\n9.1 Materiais obrigatórios principais\nA aplicação deverá trabalhar, no mínimo, com:\nWhatsApp e Stories\nFormato sugerido:\n• Vertical.\n• 1080 × 1920.\n• PNG ou JPG.\nRede social\nFormatos sugeridos:\n• Quadrado 1080 × 1080.\n• Vertical 1080 × 1350.\n• PNG ou JPG.\nBanner e telão\nFormato sugerido:\n• Proporção 16:9.\n16"
+    87→      },
+    88→      {
+    89→        "page": 17,
+    90→        "chars": 710,
+    91→        "text": "• 1920 × 1080.\n• PNG ou JPG.\nOutros\n• PDF.\n• Convite.\n• Capa.\n• Miniatura.\n• Reels ou vídeo.\n• ZIP.\n• Material para impressão.\nAs dimensões são sugestões e não deverão impedir o upload de materiais legítimos diferentes.\n9.2 Card de materiais do culto\nNa tela de cada evento, mostrar cards separados:\n• WhatsApp.\n• Redes sociais.\n• Banner/Telão.\n• Outros arquivos.\n• Galeria de fotos.\nCada card deverá informar:\n• Disponível.\n• Pendente.\n• Em aprovação.\n• Publicado.\n• Atualizado.\n9.3 Informações da arte\nCada arte deverá possuir:\n• Nome.\n• Evento.\n• Tipo.\n• Formato.\n• Dimensões.\n• Tamanho.\n• Extensão.\n• Versão.\n• Status.\n• Visibilidade.\n• Data de envio.\n• Enviado por.\n• Data de aprovação.\n• Aprovado por.\n17"
+    92→      },
+    93→      {
+    94→        "page": 18,
+    95→        "chars": 790,
+    96→        "text": "• Observações.\n• Texto de divulgação.\n• Contagem de downloads.\n• Link permanente.\n9.4 Upload\nPermitir:\n• Seleção de arquivo.\n• Arrastar e soltar.\n• Upload de vários arquivos.\n• Upload pelo celular.\n• Captura a partir da biblioteca de fotos do celular.\n• Visualização do progresso.\n• Cancelamento.\n• Nova tentativa após falha.\n• Retomada de upload quando tecnicamente suportada.\n9.5 Formatos aceitos\nAceitar, conforme configuração:\n• JPG.\n• JPEG.\n• PNG.\n• WEBP.\n• GIF.\n• PDF.\n• MP4.\n• ZIP.\n• HEIC.\n• HEIF.\nQuando HEIC ou HEIF não forem suportados diretamente, converter para formato compatível ou\napresentar orientação clara.\n9.6 Versões\nNão substituir silenciosamente uma arte.\nCriar:\n• Versão 1.\n• Versão 2.\n• Versão 3.\nSomente uma versão poderá estar marcada como:\nVersão oficial atual\n18"
+    97→      },
+    98→      {
+    99→        "page": 19,
+   100→        "chars": 956,
+   101→        "text": "As versões anteriores deverão ficar no histórico administrativo.\n9.7 Aprovação\nFluxo:\n1. Rascunho.\n2. Enviado para aprovação.\n3. Ajustes solicitados.\n4. Nova versão enviada.\n5. Aprovado.\n6. Publicado.\n7. Arquivado.\nRegistrar comentários e responsáveis.\n9.8 Download\nPermitir:\n• Download individual.\n• Download de itens selecionados.\n• Download de todas as artes do culto.\n• Download somente de redes sociais.\n• Download somente do telão.\n• Download de pacote completo em ZIP.\n9.9 Nome dos arquivos\nPadronizar os nomes baixados.\nExemplo:\n2026-08-02_Culto-da-Familia_Status-WhatsApp_v2.png\nNão utilizar nomes inseguros ou caracteres incompatíveis.\n9.10 Compartilhamento\nPermitir:\n• Copiar link do evento.\n• Copiar link da arte.\n• Compartilhar pelo menu do celular.\n• Gerar mensagem pronta para WhatsApp.\nMensagem padrão:\n“As artes oficiais do próximo culto já estão disponíveis no PraiseHub. Acesse o link para visualizar e\nbaixar as versões atualizadas.”\n19"
+   102→      },
+   103→      {
+   104→        "page": 20,
+   105→        "chars": 838,
+   106→        "text": "Adicionar o link automaticamente.\n10. GALERIA DE FOTOS\n10.1 Separação das artes\nFotos de cultos não deverão ficar misturadas com artes de divulgação.\nCriar um módulo independente chamado:\nGaleria de Fotos\n10.2 Organização dos álbuns\nCada álbum deverá possuir:\n• Nome.\n• Evento relacionado.\n• Data.\n• Descrição.\n• Fotógrafo ou colaborador.\n• Imagem de capa.\n• Quantidade de fotos.\n• Status.\n• Visibilidade.\n• Permissão de download.\n• Data de criação.\n• Data de publicação.\n• Link permanente.\n10.3 Criação automática\nAo criar um evento, o administrador poderá marcar:\nPreparar álbum de fotos para este culto\nO sistema criará um álbum em rascunho vinculado ao evento.\n10.4 Upload em massa\nPermitir:\n• Várias fotos simultaneamente.\n• Arrastar e soltar.\n• Seleção pela galeria do celular.\n• Visualização de miniaturas.\n• Progresso por foto.\n20"
+   107→      },
+   108→      {
+   109→        "page": 21,
+   110→        "chars": 944,
+   111→        "text": "• Reordenação.\n• Definição da capa.\n• Exclusão antes da publicação.\n• Nova tentativa em caso de falha.\n10.5 Contribuição de fotos\nO administrador poderá ativar:\nReceber fotos deste culto\nAo ativar:\n1. Gerar link de contribuição.\n2. Definir validade.\n3. Definir quantidade máxima.\n4. Definir tamanho máximo.\n5. Compartilhar o link.\n6. Receber fotos em fila de moderação.\n7. Aprovar ou rejeitar cada foto.\n8. Adicionar aprovadas ao álbum.\n10.6 Visibilidade\nCada álbum poderá ser:\n• Público.\n• Somente equipe de mídia.\n• Somente usuários autenticados.\n• Acesso por link.\n• Privado.\n10.7 Download\nPermitir:\n• Download individual.\n• Seleção de várias fotos.\n• Download do álbum completo.\n• Geração de ZIP.\n• Desativação do download pelo administrador.\n10.8 Privacidade das fotos\nImplementar:\n• Remoção de localização GPS dos arquivos publicados.\n• Remoção de metadados desnecessários.\n• Opção de ocultar foto sem apagar.\n• Solicitação de remoção.\n21"
+   112→      },
+   113→      {
+   114→        "page": 22,
+   115→        "chars": 1017,
+   116→        "text": "• Registro de quem publicou.\n• Moderação obrigatória para contribuições.\n• Cuidado especial com fotos de crianças.\n• Proibição de reconhecimento facial.\n• Proibição de identificação automática de pessoas.\n10.9 Autorização\nO formulário de contribuição deverá informar:\n• Para qual finalidade as fotos poderão ser utilizadas.\n• Que o envio não garante publicação.\n• Que o administrador poderá rejeitar ou retirar o conteúdo.\n• Como solicitar remoção.\n• Que o colaborador deve possuir autorização para enviar o conteúdo.\nQuando houver fotos de crianças, a publicação deverá exigir revisão administrativa reforçada e respeito\nà autorização dos responsáveis.\n11. HISTÓRICO\nCriar uma área para eventos anteriores.\n11.1 Filtros\nPermitir filtrar por:\n• Nome.\n• Data.\n• Período.\n• Ano.\n• Mês.\n• Categoria.\n• Ministério.\n• Tipo de material.\n• Status.\n• Pregador.\n• Arte.\n• Álbum.\n• Conteúdo público ou restrito.\n11.2 Arquivamento\nApós a data do culto, o sistema poderá sugerir o arquivamento.\nArquivar não significa excluir.\n22"
+   117→      },
+   118→      {
+   119→        "page": 23,
+   120→        "chars": 654,
+   121→        "text": "O evento arquivado deverá:\n• Continuar pesquisável.\n• Manter os arquivos.\n• Manter os links.\n• Manter o histórico.\n• Sair da página principal.\n12. BUSCA\nCriar busca geral capaz de localizar:\n• Cultos.\n• Eventos.\n• Artes.\n• Álbuns.\n• Datas.\n• Categorias.\n• Ministérios.\n• Pregadores.\n• Tipos de material.\n• Temas.\nApresentar resultados agrupados.\nOrdenações:\n• Mais recentes.\n• Próximos eventos.\n• Mais antigos.\n• Mais baixados.\n• Ordem alfabética.\n13. ÁREA ADMINISTRATIVA\n13.1 Dashboard\nMostrar:\n• Próximo culto.\n• Eventos da semana.\n• Artes pendentes.\n• Eventos sem arte.\n• Eventos sem banner.\n• Álbuns aguardando fotos.\n• Fotos aguardando aprovação.\n23"
+   122→      },
+   123→      {
+   124→        "page": 24,
+   125→        "chars": 684,
+   126→        "text": "• Últimos uploads.\n• Armazenamento utilizado.\n• Atividades recentes.\n13.2 Ações rápidas\nCriar:\n• Novo culto.\n• Enviar arte.\n• Criar álbum.\n• Receber fotos.\n• Aprovar materiais.\n• Convidar usuário.\n• Consultar histórico.\n13.3 Assistente de criação do culto\nCriar um processo em etapas:\nEtapa 1 — Informações\n• Nome.\n• Categoria.\n• Data.\n• Horário.\n• Local.\n• Tema.\n• Pregador.\nEtapa 2 — Materiais\n• WhatsApp.\n• Rede social.\n• Banner/Telão.\n• Outros arquivos.\nEtapa 3 — Galeria\n• Criar álbum.\n• Permitir contribuição.\n• Definir visibilidade.\nEtapa 4 — Revisão\n• Conferir informações.\n• Salvar rascunho.\n• Enviar para aprovação.\n• Publicar.\nO usuário poderá salvar e continuar depois.\n24"
+   127→      },
+   128→      {
+   129→        "page": 25,
+   130→        "chars": 752,
+   131→        "text": "13.4 Indicador de completude\nExemplo:\n• Informações do culto: concluídas.\n• Arte de WhatsApp: disponível.\n• Rede social: disponível.\n• Banner/Telão: pendente.\n• Álbum: preparado.\n• Publicação: aguardando.\n13.5 Alterações posteriores\nO administrador poderá alterar:\n• Data.\n• Horário.\n• Imagem.\n• Texto.\n• Pregador.\n• Visibilidade.\n• Status.\nToda alteração relevante deverá ficar registrada.\n14. DESIGN SYSTEM\n14.1 Direção visual\nA interface deverá ser:\n• Moderna.\n• Organizada.\n• Acolhedora.\n• Ministerial.\n• Elegante.\n• Clara.\n• Visualmente leve.\n• Fácil para pessoas com pouca familiaridade digital.\nEvitar:\n• Excesso de efeitos.\n• Poluição visual.\n• Gradientes exagerados.\n• Elementos piscando.\n• Carrosséis automáticos.\n• Ícones sem significado.\n25"
+   132→      },
+   133→      {
+   134→        "page": 26,
+   135→        "chars": 621,
+   136→        "text": "• Aparência de sistema empresarial antigo.\n• Aparência infantil fora dos módulos infantis.\n14.2 Identidade inicial\nEnquanto o logo oficial não for enviado:\n• Azul profundo como cor principal.\n• Branco como base.\n• Dourado suave como destaque.\n• Cinzas neutros para estrutura.\nO administrador deverá conseguir enviar:\n• Logo.\n• Ícone.\n• Imagem de capa.\n• Cores oficiais.\n14.3 Tokens\nCriar tokens em três níveis:\nPrimitivos\nValores brutos de:\n• Cores.\n• Espaçamento.\n• Tipografia.\n• Bordas.\n• Sombras.\n• Raios.\nSemânticos\nExemplos:\n• primary\n• secondary\n• background\n• surface\n• text\n• muted\n• success\n• warning\n• danger\n26"
+   137→      },
+   138→      {
+   139→        "page": 27,
+   140→        "chars": 1021,
+   141→        "text": "Componentes\nExemplos:\n• button-primary-background\n• card-border\n• input-focus\n• navigation-active\nNão espalhar valores de cor aleatórios diretamente nos componentes.\n14.4 Tipografia\n• Texto-base mínimo de 16 px.\n• Altura de linha confortável.\n• Títulos com hierarquia clara.\n• Não utilizar textos minúsculos para informações importantes.\n• Priorizar fontes legíveis.\n• Evitar múltiplas famílias tipográficas sem necessidade.\n14.5 Botões e áreas de toque\n• Área de toque mínima recomendada de 48 × 48 px.\n• Espaçamento adequado entre ações.\n• Não depender de hover.\n• Exibir feedback ao tocar.\n• Mostrar estado de carregamento.\n• Impedir cliques duplicados durante processamento.\n14.6 Ícones\n• Utilizar ícones vetoriais consistentes.\n• Não utilizar emoji como substituto padrão de ícone.\n• Ícones isolados deverão possuir rótulo acessível.\n• Ações críticas deverão combinar ícone e texto.\n14.7 Estados dos componentes\nEspecificar:\n• Normal.\n• Hover.\n• Foco.\n• Pressionado.\n• Carregando.\n• Desativado.\n• Erro.\n• Sucesso.\n27"
+   142→      },
+   143→      {
+   144→        "page": 28,
+   145→        "chars": 996,
+   146→        "text": "15. COMPORTAMENTO RESPONSIVO\n15.1 Mobile\nEm celular:\n• Layout de uma coluna.\n• Navegação inferior com até cinco itens ou menu simples.\n• Botões principais em largura confortável.\n• Formulários empilhados.\n• Cards ocupando a largura disponível.\n• Upload utilizável com o dedo.\n• Ações frequentes próximas da parte inferior.\n• Imagens sem cortes indevidos.\n• Modais quase em tela cheia quando necessário.\n• Respeitar áreas seguras do aparelho.\n• Não existir rolagem horizontal.\n15.2 Tablet\nEm tablet:\n• Uma ou duas colunas conforme o conteúdo.\n• Formulários com melhor aproveitamento de espaço.\n• Navegação lateral ou superior.\n• Galeria com duas ou três colunas.\n15.3 Desktop\nEm computador:\n• Área administrativa com menu lateral.\n• Conteúdo central com largura controlada.\n• Galeria com três ou quatro colunas.\n• Formulários divididos em seções.\n• Painéis e filtros lado a lado.\n• Ações administrativas visíveis sem excesso.\n15.4 Grades sugeridas\nMobile\n• 1 coluna.\nTablet pequeno\n• 2 colunas.\n28"
+   147→      },
+   148→      {
+   149→        "page": 29,
+   150→        "chars": 845,
+   151→        "text": "Tablet grande\n• 2 ou 3 colunas.\nDesktop\n• 3 ou 4 colunas.\nA quantidade deverá se adaptar ao espaço disponível, e não somente a dispositivos específicos.\n15.5 Tamanhos mínimos de teste\nTestar, no mínimo:\n• 360 × 800.\n• 390 × 844.\n• 412 × 915.\n• 768 × 1024.\n• 1024 × 768.\n• 1366 × 768.\n• 1440 × 900.\n15.6 Regras obrigatórias\n• Utilizar viewport correto.\n• Evitar larguras fixas rígidas.\n• Utilizar Grid e Flexbox.\n• Utilizar imagens fluidas.\n• Reservar espaço antes de carregar imagens.\n• Não cortar textos.\n• Não esconder ações importantes.\n• Não desativar zoom do navegador.\n• Não depender de orientação horizontal.\n16. EXPERIÊNCIA DE UPLOAD\n16.1 Interface\nA área de upload deverá exibir:\n• Arquivos selecionados.\n• Miniaturas.\n• Nome.\n• Tamanho.\n• Progresso.\n• Status.\n• Mensagem de erro.\n• Botão para tentar novamente.\n• Botão para remover.\n29"
+   152→      },
+   153→      {
+   154→        "page": 30,
+   155→        "chars": 936,
+   156→        "text": "• Resumo final.\n16.2 Conexão instável\nQuando tecnicamente possível:\n• Retomar upload interrompido.\n• Manter arquivos já concluídos.\n• Não reiniciar todo o lote.\n• Informar qual arquivo falhou.\n16.3 Validações\nValidar:\n• Tipo real do arquivo.\n• Extensão.\n• Tamanho.\n• Dimensões quando aplicável.\n• Quantidade.\n• Nome seguro.\n• Arquivo corrompido.\n• Conteúdo incompatível.\n16.4 Processamento\nPara imagens públicas:\n• Gerar miniaturas.\n• Gerar versão otimizada.\n• Preservar original quando necessário.\n• Remover metadados de localização.\n• Utilizar carregamento tardio na galeria.\n• Não carregar arquivos originais pesados na grade.\n17. ARQUITETURA TÉCNICA\n17.1 Stack preferencial\nQuando suportado pelo ambiente, utilizar:\n• Next.js ou framework React equivalente.\n• TypeScript em modo estrito.\n• Tailwind CSS.\n• shadcn/ui ou componentes acessíveis equivalentes.\n• Banco PostgreSQL.\n• Autenticação integrada.\n• Armazenamento de objetos.\n30"
+   157→      },
+   158→      {
+   159→        "page": 31,
+   160→        "chars": 1004,
+   161→        "text": "• Políticas de acesso por usuário e perfil.\n• Testes com Playwright.\n• Testes de acessibilidade automatizados.\n• Pipeline de qualidade no GitHub.\n17.2 Alternativa nativa da plataforma\nCaso a Z.AI ofereça banco, autenticação e armazenamento nativos, eles poderão ser utilizados.\nEntretanto, deverão preservar:\n• Persistência.\n• Controle de acesso.\n• Exportação.\n• Banco relacional ou modelo consistente.\n• Upload real.\n• Links protegidos.\n• Auditoria.\n• Possibilidade de migração.\n17.3 Fallback recomendado\nQuando a plataforma não possuir backend completo, utilizar:\n• Supabase Auth.\n• Supabase PostgreSQL.\n• Supabase Storage.\n• Row Level Security.\n• URLs assinadas para arquivos privados.\n17.4 GitHub\nUtilizar o GitHub para:\n• Código-fonte.\n• Especificação.\n• Tarefas.\n• Documentação.\n• Histórico de alterações.\n• Issues.\n• Pipeline de testes.\n• Versionamento.\nNão utilizar o repositório Git como armazenamento principal das fotos e artes enviadas pelos usuários.\n18. MODELO DE DADOS\nCriar, no mínimo:\n31"
+   162→      },
+   163→      {
+   164→        "page": 32,
+   165→        "chars": 478,
+   166→        "text": "18.1 profiles\n• id\n• nome\n• email\n• avatar\n• perfil\n• status\n• criado_em\n• ultimo_acesso\n18.2 church_settings\n• id\n• nome_da_igreja\n• nome_da_aplicacao\n• subtitulo\n• logo\n• icone\n• imagem_de_capa\n• cores\n• endereco\n• fuso_horario\n• configuracoes_de_acesso\nUtilizar o fuso:\nAmerica/Sao_Paulo\n18.3 event_categories\n• id\n• nome\n• icone\n• ativo\n• ordem\n18.4 events\n• id\n• nome\n• categoria_id\n• descricao\n• data\n• horario_inicio\n• horario_fim\n• local\n• endereco\n• tema\n• versiculo\n32"
+   167→      },
+   168→      {
+   169→        "page": 33,
+   170→        "chars": 606,
+   171→        "text": "• pregador\n• ministerio\n• capa\n• status\n• visibilidade\n• destaque_manual\n• publicado_em\n• criado_por\n• criado_em\n• atualizado_por\n• atualizado_em\n18.5 media_assets\n• id\n• evento_id\n• nome\n• tipo\n• status\n• visibilidade\n• versao_atual\n• texto_de_divulgacao\n• observacoes\n• enviado_por\n• aprovado_por\n• aprovado_em\n• publicado_em\n• quantidade_downloads\n• criado_em\n• atualizado_em\n18.6 media_versions\n• id\n• media_asset_id\n• numero_da_versao\n• caminho_do_arquivo\n• nome_original\n• nome_padronizado\n• extensao\n• mime_type\n• tamanho\n• largura\n• altura\n• checksum\n• arquivo_oficial\n• enviado_por\n• enviado_em\n33"
+   172→      },
+   173→      {
+   174→        "page": 34,
+   175→        "chars": 587,
+   176→        "text": "18.7 albums\n• id\n• evento_id\n• nome\n• descricao\n• fotografo\n• capa\n• status\n• visibilidade\n• permitir_download\n• aceitar_contribuicoes\n• criado_por\n• criado_em\n• publicado_em\n18.8 album_photos\n• id\n• album_id\n• caminho_original\n• caminho_otimizado\n• caminho_thumbnail\n• nome_original\n• legenda\n• ordem\n• status\n• visibilidade\n• enviado_por\n• enviado_em\n• aprovado_por\n• aprovado_em\n18.9 contribution_links\n• id\n• evento_id\n• album_id\n• token_seguro\n• ativo\n• expira_em\n• limite_de_arquivos\n• limite_de_tamanho\n• criado_por\n• criado_em\n• revogado_em\n18.10 contribution_submissions\n• id\n34"
+   177→      },
+   178→      {
+   179→        "page": 35,
+   180→        "chars": 630,
+   181→        "text": "• contribution_link_id\n• nome_do_colaborador\n• contato_opcional\n• arquivo\n• aceite_de_uso\n• status\n• enviado_em\n• revisado_por\n• revisado_em\n• motivo_da_rejeicao\n18.11 approvals\n• id\n• tipo_de_conteudo\n• conteudo_id\n• versao\n• decisao\n• comentario\n• usuario_id\n• criado_em\n18.12 audit_logs\n• id\n• usuario_id\n• acao\n• entidade\n• entidade_id\n• descricao\n• dados_anteriores\n• dados_posteriores\n• ip_quando_permitido\n• criado_em\n18.13 downloads\n• id\n• conteudo_id\n• tipo_de_conteudo\n• usuario_id_opcional\n• criado_em\nNão registrar informações invasivas sem necessidade.\n18.14 product_feedback\n• id\n• usuario_id_opcional\n• categoria\n35"
+   182→      },
+   183→      {
+   184→        "page": 36,
+   185→        "chars": 682,
+   186→        "text": "• descricao\n• status\n• decisao_do_administrador\n• criado_em\n• analisado_em\n19. ARMAZENAMENTO\n19.1 Buckets ou áreas\nSeparar:\nConteúdo público\n• Artes publicadas.\n• Capas públicas.\n• Miniaturas públicas.\nConteúdo privado\n• Artes em rascunho.\n• Versões anteriores.\n• Fotos privadas.\n• Envios aguardando aprovação.\n• Originais protegidos.\n19.2 Convenção de caminhos\nUtilizar estrutura semelhante a:\nigreja/evento/tipo/identificador-versao.extensao\nExemplo:\nadsa-praise/evt-2026-08-02/whatsapp/status-v2.png\n19.3 Links privados\nArquivos privados deverão utilizar:\n• Autorização do usuário; ou\n• URL assinada e temporária.\nNão utilizar URLs públicas permanentes para arquivos privados.\n36"
+   187→      },
+   188→      {
+   189→        "page": 37,
+   190→        "chars": 1076,
+   191→        "text": "19.4 Exclusão\nA exclusão deverá ocorrer em duas fases:\n1. Lixeira ou exclusão lógica.\n2. Exclusão definitiva confirmada.\nAo excluir definitivamente:\n• Excluir o registro.\n• Excluir o arquivo físico.\n• Registrar auditoria.\n20. SEGURANÇA\nImplementar:\n• Senhas protegidas.\n• Sessões seguras.\n• Recuperação de senha.\n• Controle por perfil.\n• Políticas no banco.\n• Políticas no armazenamento.\n• Validação de uploads.\n• Limitação de tentativas.\n• Proteção contra envio automatizado abusivo.\n• Proteção contra acesso direto.\n• Confirmação para ações destrutivas.\n• Segredos em variáveis de ambiente.\n• Nenhuma chave no código.\n• Nenhuma chave no GitHub.\n• Nenhum token exibido no frontend.\nO último administrador ativo não poderá ser removido sem que outro seja definido.\n21. DESEMPENHO\n21.1 Imagens\n• Utilizar imagens responsivas.\n• Gerar tamanhos adequados ao dispositivo.\n• Utilizar formatos modernos quando possível.\n• Carregar miniaturas na galeria.\n• Carregar originais somente ao abrir ou baixar.\n• Utilizar lazy loading.\n• Reservar proporção para evitar mudança de layout.\n37"
+   192→      },
+   193→      {
+   194→        "page": 38,
+   195→        "chars": 952,
+   196→        "text": "21.2 Página inicial\nPriorizar o carregamento de:\n1. Cabeçalho.\n2. Informações do próximo culto.\n3. Imagem principal otimizada.\n4. Botões de download.\n5. Conteúdo secundário.\n21.3 Metas\nBuscar, em ambiente de produção:\n• Acessibilidade Lighthouse igual ou superior a 95.\n• Boas práticas igual ou superior a 90.\n• SEO igual ou superior a 90 nas páginas públicas.\n• Performance mobile igual ou superior a 85, quando tecnicamente viável.\nNão sacrificar segurança ou funcionalidade apenas para melhorar pontuação.\n22. ACESSIBILIDADE\nValidar:\n• Contraste mínimo adequado.\n• Alt text.\n• Rótulos dos formulários.\n• Navegação por teclado.\n• Foco visível.\n• Ordem de foco.\n• Leitor de tela.\n• Mensagens de erro associadas aos campos.\n• Botões com nomes acessíveis.\n• Diálogos com foco controlado.\n• Fechamento por teclado.\n• Preferência de movimento reduzido.\n• Não depender somente de cor.\n23. TESTES\n23.1 Testes unitários\nTestar:\n• Cálculo do próximo culto.\n38"
+   197→      },
+   198→      {
+   199→        "page": 39,
+   200→        "chars": 906,
+   201→        "text": "• Prioridade do destaque manual.\n• Regras de status.\n• Padronização de nomes.\n• Permissões.\n• Validação de arquivos.\n• Expiração dos links.\n• Mudança de versão oficial.\n23.2 Testes de integração\nTestar:\n• Banco de dados.\n• Autenticação.\n• Upload.\n• Armazenamento.\n• Políticas de acesso.\n• Publicação.\n• Download.\n• Auditoria.\n• Exclusão.\n• Restauração.\n23.3 Testes ponta a ponta\nCriar cenários automatizados:\nCenário 1 — Criar e publicar culto\n1. Administrador entra.\n2. Cria evento.\n3. Informa data e horário.\n4. Envia arte de WhatsApp.\n5. Envia banner.\n6. Publica.\n7. Evento aparece como próximo culto.\n8. Visitante baixa os materiais.\nCenário 2 — Corrigir arte\n1. Versão 1 está publicada.\n2. Administrador envia versão 2.\n3. Versão 2 é aprovada.\n4. Versão 2 se torna oficial.\n5. Versão 1 permanece no histórico.\nCenário 3 — Galeria\n1. Administrador cria álbum.\n2. Envia várias fotos.\n3. Escolhe capa.\n39"
+   202→      },
+   203→      {
+   204→        "page": 40,
+   205→        "chars": 848,
+   206→        "text": "4. Publica.\n5. Visitante visualiza.\n6. Download funciona conforme permissão.\nCenário 4 — Contribuição\n1. Administrador gera link.\n2. Colaborador acessa no celular.\n3. Envia fotos.\n4. Fotos entram como pendentes.\n5. Administrador aprova.\n6. Somente aprovadas aparecem no álbum.\nCenário 5 — Segurança\n1. Usuário não autenticado tenta acessar arquivo privado.\n2. Acesso é negado.\n3. Link expirado não funciona.\n4. Editor não consegue alterar administradores.\n23.4 Navegadores\nTestar:\n• Chromium.\n• Firefox.\n• WebKit/Safari.\n23.5 Mobile\nExecutar os principais cenários em emulação de:\n• Android.\n• iPhone.\n• Tablet.\n23.6 Teste visual\nGerar capturas de referência das páginas principais.\nDetectar:\n• Componentes desalinhados.\n• Textos cortados.\n• Rolagem horizontal.\n• Sobreposição.\n• Modais fora da tela.\n• Botões inacessíveis.\n• Imagens deformadas.\n40"
+   207→      },
+   208→      {
+   209→        "page": 41,
+   210→        "chars": 737,
+   211→        "text": "24. ESTRUTURA DO REPOSITÓRIO\nCriar estrutura equivalente a:\n/\n├── AGENTS.md\n├── README.md\n├── CHANGELOG.md\n├── PROJECT_MEMORY.md\n├── package.json\n├── .env.example\n├── .github/\n│ └── workflows/\n├── .specify/\n│ └── memory/\n│ └── constitution.md\n├── specs/\n│ └── 001-praisehub/\n│ ├── spec.md\n│ ├── plan.md\n│ ├── tasks.md\n│ └── checklists/\n├── docs/\n│ ├── product.md\n│ ├── architecture.md\n│ ├── design-system.md\n│ ├── permissions.md\n│ ├── storage.md\n│ ├── privacy.md\n│ ├── testing.md\n│ ├── operations.md\n│ └── decisions/\n├── src/\n│ ├── app/\n│ ├── components/\n│ ├── features/\n│ ├── lib/\n│ ├── services/\n│ ├── styles/\n│ └── types/\n├── public/\n├── database/\n│ ├── migrations/\n│ ├── policies/\n│ └── seed/\n└── tests/\n├── unit/\n├── integration/\n41"
+   212→      },
+   213→      {
+   214→        "page": 42,
+   215→        "chars": 575,
+   216→        "text": "├── e2e/\n└── accessibility/\nAdaptar a estrutura quando o ambiente exigir, preservando a separação das responsabilidades.\n25. FASES DE IMPLEMENTAÇÃO\nFase 1 — Fundação\n• Repositório.\n• Constituição.\n• Documentação.\n• Banco.\n• Autenticação.\n• Perfis.\n• Configurações.\n• Design system.\nFase 2 — Eventos\n• Cadastro.\n• Edição.\n• Destaque.\n• Próximo culto.\n• Área pública.\n• Histórico básico.\nFase 3 — Artes\n• Upload.\n• Tipos.\n• Versões.\n• Aprovação.\n• Publicação.\n• Download.\n• ZIP.\nFase 4 — Galeria\n• Álbuns.\n• Upload em massa.\n• Miniaturas.\n• Capa.\n• Visibilidade.\n• Download.\n42"
+   217→      },
+   218→      {
+   219→        "page": 43,
+   220→        "chars": 1295,
+   221→        "text": "Fase 5 — Colaboração\n• Link de contribuição.\n• Expiração.\n• Fila de moderação.\n• Aprovação de fotos.\n• Privacidade.\nFase 6 — Administração avançada\n• Dashboard.\n• Auditoria.\n• Backup.\n• Feedback.\n• Notificações.\n• Indicadores.\nFase 7 — Qualidade\n• Testes completos.\n• Responsividade.\n• Acessibilidade.\n• Desempenho.\n• Segurança.\n• Convergência.\nCada fase deverá terminar com uma aplicação utilizável.\n26. CRITÉRIOS DE CONCLUSÃO\nO projeto não estará concluído enquanto qualquer condição abaixo estiver pendente:\n1. O administrador consegue entrar.\n2. O administrador consegue criar um culto.\n3. O administrador consegue alterar data e horário.\n4. O administrador consegue enviar arte de WhatsApp.\n5. O administrador consegue enviar arte de rede social.\n6. O administrador consegue enviar banner ou imagem de telão.\n7. Os arquivos continuam disponíveis após novo acesso.\n8. O administrador consegue publicar.\n9. O próximo culto aparece na página inicial.\n10. O visitante consegue baixar os arquivos públicos.\n11. O administrador consegue criar álbum.\n12. Várias fotos podem ser enviadas.\n13. Um colaborador consegue enviar fotos por link.\n14. As contribuições entram em moderação.\n15. Arquivos privados não ficam públicos.\n16. O histórico registra as ações.\n17. A aplicação funciona em celular.\n43"
+   222→      },
+   223→      {
+   224→        "page": 44,
+   225→        "chars": 1055,
+   226→        "text": "18. A aplicação funciona em computador.\n19. Não existe rolagem horizontal indevida.\n20. Não existem botões sem função.\n21. Não existem dados simulados obrigatórios.\n22. Os testes principais passam.\n23. O repositório possui documentação.\n24. A memória do projeto está atualizada.\n25. A especificação corresponde ao que foi implementado.\n27. RELATÓRIO FINAL OBRIGATÓRIO\nAo concluir, apresentar:\n• Link da aplicação.\n• Link do repositório.\n• Tecnologias utilizadas.\n• Estrutura do banco.\n• Estrutura do armazenamento.\n• Usuário administrador inicial.\n• Orientação para alterar a senha.\n• Orientação para criar o primeiro culto.\n• Orientação para subir artes.\n• Orientação para criar álbum.\n• Orientação para gerar link de contribuição.\n• Perfis e permissões.\n• Testes executados.\n• Resultado dos testes.\n• Limitações conhecidas.\n• Funcionalidades pendentes.\n• Procedimento de backup.\n• Procedimento de atualização.\n• Procedimento de recuperação.\nNão ocultar limitações.\n28. DADOS INICIAIS DA APLICAÇÃO\nNome\nPraiseHub\nSubtítulo\nCentral de Mídia ADSA Praise\n44"
+   227→      },
+   228→      {
+   229→        "page": 45,
+   230→        "chars": 1102,
+   231→        "text": "Texto principal\nArtes, fotos e materiais oficiais da ADSA Praise, organizados em um só lugar.\nTexto complementar\nConsulte o próximo culto, encontre as versões atualizadas e baixe os materiais necessários para\ndivulgação e utilização na igreja.\nInformação institucional\nO PraiseHub é a fonte oficial dos materiais de mídia da ADSA Praise.\nBotões principais\n• Ver próximo culto.\n• Baixar artes.\n• Abrir galeria.\n• Consultar histórico.\n29. COMANDO DE INÍCIO DA EXECUÇÃO\nLeia integralmente esta especificação.\nAntes de implementar:\n1. Crie a constituição do projeto.\n2. Crie o AGENTS.md .\n3. Crie o modelo de dados.\n4. Crie o plano técnico.\n5. Crie o design system.\n6. Crie as histórias de usuário.\n7. Crie os critérios de aceite.\n8. Crie a lista de tarefas em ordem de dependência.\n9. Identifique qualquer limitação real do ambiente.\n10. Escolha os serviços nativos ou equivalentes necessários.\nDepois, implemente a Fase 1 e a Fase 2.\nNão interrompa o trabalho apenas após criar o layout.\nAo final de cada fase:\n• Execute os testes.\n• Corrija as falhas.\n• Atualize a documentação.\n• Atualize a memória.\n45"
+   232→      },
+   233→      {
+   234→        "page": 46,
+   235→        "chars": 241,
+   236→        "text": "• Compare a implementação com a especificação.\n• Registre as pendências.\n• Continue para a próxima fase.\nO resultado final deve ser uma aplicação funcional, persistente, segura, responsiva e utilizável pela\nequipe de mídia da ADSA Praise.\n46"
+   237→      }
+   238→    ]
+   239→  }
+   240→}
