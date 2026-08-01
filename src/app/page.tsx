@@ -28,7 +28,7 @@ import {
 import { CopyLinkButton } from "@/components/praisehub/copy-link-button";
 
 async function getDadosIniciais() {
-  const [settings, eventos] = await Promise.all([
+  const [settings, eventos, cultosRegulares] = await Promise.all([
     db.churchSettings.findUnique({ where: { id: "singleton" } }),
     db.event.findMany({
       where: {
@@ -37,6 +37,10 @@ async function getDadosIniciais() {
       },
       include: { categoria: true },
       orderBy: { data: "asc" },
+    }),
+    db.serviceSchedule.findMany({
+      where: { ativo: true },
+      orderBy: [{ diaSemana: "asc" }, { horarioInicio: "asc" }],
     }),
   ]);
 
@@ -54,11 +58,11 @@ async function getDadosIniciais() {
     .sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime())
     .slice(0, 3);
 
-  return { settings, proximoCulto, daSemana, ultimos };
+  return { settings, proximoCulto, daSemana, ultimos, cultosRegulares };
 }
 
 export default async function HomePage() {
-  const { settings, proximoCulto, daSemana, ultimos } = await getDadosIniciais();
+  const { settings, proximoCulto, daSemana, ultimos, cultosRegulares } = await getDadosIniciais();
 
   const subtitulo = settings?.subtitulo ?? "Central de Mídia ADSA Reimberg";
   const textoPrincipal =
@@ -303,6 +307,62 @@ export default async function HomePage() {
               {ultimos.map((e) => (
                 <EventCard key={e.id} evento={e} />
               ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Horários regulares */}
+      {cultosRegulares.length > 0 && (
+        <section className="border-t border-border py-10">
+          <div className="praise-container space-y-6">
+            <div className="flex items-end justify-between gap-3">
+              <div>
+                <p className="praise-eyebrow">Nossa agenda</p>
+                <h2 className="mt-1 text-2xl font-bold text-foreground sm:text-3xl">Horários dos cultos</h2>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Atividades regulares da ADSA Reimberg.
+                </p>
+              </div>
+              <Button asChild variant="ghost" size="sm">
+                <Link href="/cultos">
+                  Ver todos
+                  <ChevronRight className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+
+            {/* Endereço */}
+            {settings?.endereco && (
+              <div className="flex items-start gap-2 rounded-md border border-border bg-muted/30 p-3 text-sm">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-praise-gold" aria-hidden="true" />
+                <div>
+                  <p className="font-medium text-foreground">Endereço</p>
+                  <p className="text-muted-foreground">{settings.endereco}</p>
+                </div>
+              </div>
+            )}
+
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {cultosRegulares.slice(0, 4).map((c) => {
+                const dias = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+                return (
+                  <div
+                    key={c.id}
+                    className="rounded-lg border border-border bg-card p-4 transition-shadow hover:shadow-sm"
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-widest text-praise-gold">
+                      {dias[c.diaSemana]}
+                    </p>
+                    <p className="mt-1 text-base font-bold text-foreground">{c.nome}</p>
+                    <p className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
+                      <Clock className="h-3.5 w-3.5" aria-hidden="true" />
+                      {c.horarioInicio}
+                      {c.horarioFim && ` – ${c.horarioFim}`}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>

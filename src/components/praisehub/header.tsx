@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Church, LogOut, LayoutDashboard, Calendar, Settings, History, Download, Images } from "lucide-react";
+import { Menu, X, Church, LogOut, LayoutDashboard, Calendar, Settings, History, Download, Images, Clock, Database } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -19,6 +19,7 @@ const navPublico: NavItem[] = [
   { href: "/baixar", label: "Baixar artes", icon: Download },
   { href: "/galeria", label: "Galeria", icon: Images },
   { href: "/eventos", label: "Próximos cultos", icon: Calendar },
+  { href: "/cultos", label: "Horários", icon: Clock },
   { href: "/historico", label: "Histórico", icon: History },
 ];
 
@@ -26,7 +27,9 @@ const navAdmin: NavItem[] = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/eventos", label: "Eventos", icon: Calendar },
   { href: "/admin/galeria", label: "Galeria", icon: Images },
+  { href: "/admin/cultos", label: "Horários", icon: Clock },
   { href: "/admin/configuracoes", label: "Configurações", icon: Settings },
+  { href: "/admin/backup", label: "Backup", icon: Database },
 ];
 
 export function Header() {
@@ -40,12 +43,14 @@ export function Header() {
     <header className="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="praise-container flex h-16 items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-2" aria-label="ADSA Reimberg Mídias - página inicial">
-          <span
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm"
+          <img
+            src="/logo-adsa-transparente.png"
+            alt=""
+            width={36}
+            height={36}
+            className="h-9 w-9 shrink-0 rounded-md object-contain"
             aria-hidden="true"
-          >
-            <Church className="h-5 w-5" />
-          </span>
+          />
           <span className="flex flex-col leading-tight">
             <span className="text-base font-bold text-primary">ADSA Reimberg Mídias</span>
             <span className="hidden text-[11px] uppercase tracking-widest text-praise-gold sm:inline">

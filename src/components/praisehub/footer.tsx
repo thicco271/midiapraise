@@ -10,12 +10,14 @@ export function Footer() {
       <div className="praise-container py-6">
         <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
           <div className="flex items-center gap-2">
-            <span
-              className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground"
+            <img
+              src="/logo-adsa-azul.png"
+              alt=""
+              width={32}
+              height={32}
+              className="h-8 w-8 shrink-0 object-contain"
               aria-hidden="true"
-            >
-              <Church className="h-4 w-4" />
-            </span>
+            />
             <div className="text-sm">
               <p className="font-semibold text-foreground">ADSA Reimberg Mídias</p>
               <p className="text-xs text-muted-foreground">

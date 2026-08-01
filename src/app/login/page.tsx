@@ -104,9 +104,14 @@ export default function LoginPage() {
     <div className="praise-container flex min-h-[calc(100vh-12rem)] items-center justify-center py-10">
       <Card className="w-full max-w-md praise-card">
         <CardHeader className="space-y-3 text-center">
-          <div className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-md">
-            <Church className="h-6 w-6" aria-hidden="true" />
-          </div>
+          <img
+            src="/logo-adsa-azul.png"
+            alt=""
+            width={56}
+            height={56}
+            className="mx-auto h-14 w-14 object-contain"
+            aria-hidden="true"
+          />
           <CardTitle className="text-2xl">Entrar na ADSA Reimberg Mídias</CardTitle>
           <p className="text-sm text-muted-foreground">
             Acesso restrito à equipe de mídia da ADSA Reimberg.

@@ -66,6 +66,27 @@ model ChurchSettings {
 }
 
 // ============================================================
+// HORÁRIOS DE CULTOS (recorrentes)
+// ============================================================
+
+model ServiceSchedule {
+  id            String   @id @default(cuid())
+  nome          String   // ex.: Celebração da Família
+  diaSemana     Int      // 0=Dom, 1=Seg, 2=Ter, 3=Qua, 4=Qui, 5=Sex, 6=Sáb
+  horarioInicio String   // "18:00"
+  horarioFim    String?  // "20:00"
+  categoria     String?  // ex.: culto, ebd, especial
+  descricao     String?
+  ativo         Boolean  @default(true)
+  ordem         Int      @default(0)
+  criadoEm      DateTime @default(now())
+  atualizadoEm  DateTime @updatedAt
+
+  @@index([ativo])
+  @@index([diaSemana])
+}
+
+// ============================================================
 // CATEGORIAS DE EVENTOS
 // ============================================================
 
