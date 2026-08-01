@@ -229,20 +229,18 @@ export default async function BaixarEventoPage({
                         {/* Preview */}
                         <div className="relative aspect-video w-full overflow-hidden bg-muted">
                           {versao?.caminhoThumbnail ? (
-                             
                             <img
                               src={versao.caminhoThumbnail}
                               alt={`Pré-visualização de ${asset.nome}`}
                               className="h-full w-full object-cover"
-                              loading="lazy"
+                              loading="eager"
                             />
                           ) : isImage && versao ? (
-                             
                             <img
                               src={versao.caminhoDoArquivo}
                               alt={`Pré-visualização de ${asset.nome}`}
                               className="h-full w-full object-cover"
-                              loading="lazy"
+                              loading="eager"
                             />
                           ) : (
                             <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/10 to-praise-gold/10">

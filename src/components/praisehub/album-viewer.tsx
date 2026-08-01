@@ -13,6 +13,7 @@ import {
   ChevronRight,
   Download,
   Maximize2,
+  ImageIcon,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -29,6 +30,53 @@ interface AlbumViewerFoto {
 
 interface AlbumViewerProps {
   fotos: (AlbumViewerFoto & { permitirDownload?: boolean })[];
+}
+
+// Componente de imagem com fallback
+// altaResolucao=true: prioriza otimizado/original (para lightbox)
+// altaResolucao=false: prioriza thumbnail (para grid)
+function FotoComFallback({
+  foto,
+  className,
+  alt,
+  eager = false,
+  altaResolucao = false,
+}: {
+  foto: AlbumViewerFoto;
+  className?: string;
+  alt: string;
+  eager?: boolean;
+  altaResolucao?: boolean;
+}) {
+  // Ordem de prioridade depende do uso
+  const candidatos = altaResolucao
+    ? [foto.caminhoOtimizado, foto.caminhoOriginal, foto.caminhoThumbnail].filter(Boolean) as string[]
+    : [foto.caminhoThumbnail, foto.caminhoOtimizado, foto.caminhoOriginal].filter(Boolean) as string[];
+
+  const [tentativa, setTentativa] = useState(0);
+
+  if (candidatos.length === 0) {
+    return (
+      <div className={`flex items-center justify-center bg-muted ${className ?? ""}`}>
+        <ImageIcon className="h-8 w-8 text-muted-foreground" aria-hidden="true" />
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={candidatos[tentativa] ?? foto.caminhoOriginal}
+      alt={alt}
+      className={className}
+      loading={eager ? "eager" : "lazy"}
+      onError={() => {
+        // Tenta próxima versão
+        if (tentativa < candidatos.length - 1) {
+          setTentativa(tentativa + 1);
+        }
+      }}
+    />
+  );
 }
 
 export function AlbumViewer({ fotos }: AlbumViewerProps) {
@@ -69,7 +117,7 @@ export function AlbumViewer({ fotos }: AlbumViewerProps) {
 
   return (
     <>
-      {/* Grid de fotos */}
+      {/* Grid de fotos — carrega EAGER (imediatamente, sem lazy) */}
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 md:grid-cols-4 lg:grid-cols-5">
         {fotos.map((foto, i) => (
           <button
@@ -79,28 +127,12 @@ export function AlbumViewer({ fotos }: AlbumViewerProps) {
             className="group relative aspect-square overflow-hidden rounded-lg border border-border bg-muted transition-shadow hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring"
             aria-label={`Abrir foto ${i + 1}: ${foto.legenda ?? foto.nomeOriginal}`}
           >
-            {foto.caminhoThumbnail ? (
-              <img
-                src={foto.caminhoThumbnail}
-                alt={foto.legenda ?? foto.nomeOriginal}
-                className="h-full w-full object-cover transition-transform group-hover:scale-105"
-                loading="lazy"
-              />
-            ) : foto.caminhoOtimizado ? (
-              <img
-                src={foto.caminhoOtimizado}
-                alt={foto.legenda ?? foto.nomeOriginal}
-                className="h-full w-full object-cover transition-transform group-hover:scale-105"
-                loading="lazy"
-              />
-            ) : (
-              <img
-                src={foto.caminhoOriginal}
-                alt={foto.legenda ?? foto.nomeOriginal}
-                className="h-full w-full object-cover transition-transform group-hover:scale-105"
-                loading="lazy"
-              />
-            )}
+            <FotoComFallback
+              foto={foto}
+              alt={foto.legenda ?? foto.nomeOriginal}
+              className="h-full w-full object-cover transition-transform group-hover:scale-105"
+              eager={i < 6}
+            />
             <div className="absolute inset-0 flex items-end justify-end bg-gradient-to-t from-black/30 to-transparent p-2 opacity-0 transition-opacity group-hover:opacity-100">
               <Maximize2 className="h-4 w-4 text-white" aria-hidden="true" />
             </div>
@@ -157,12 +189,14 @@ export function AlbumViewer({ fotos }: AlbumViewerProps) {
                 </Button>
               )}
 
-              {/* Imagem */}
+              {/* Imagem em alta resolução */}
               <div className="flex h-full w-full items-center justify-center p-4">
-                <img
-                  src={fotoAtual.caminhoOtimizado ?? fotoAtual.caminhoOriginal}
+                <FotoComFallback
+                  foto={fotoAtual}
                   alt={fotoAtual.legenda ?? fotoAtual.nomeOriginal}
                   className="max-h-full max-w-full object-contain"
+                  eager
+                  altaResolucao
                 />
               </div>
 

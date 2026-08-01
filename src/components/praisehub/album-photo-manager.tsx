@@ -481,21 +481,36 @@ export function AlbumPhotoManager({ albumId, fotosIniciais, capaPhotoId }: Album
                           src={foto.caminhoThumbnail}
                           alt={foto.legenda ?? foto.nomeOriginal}
                           className="h-full w-full object-cover"
-                          loading="lazy"
+                          loading="eager"
+                          onError={(e) => {
+                            // Tenta otimizado, depois original
+                            const img = e.currentTarget;
+                            if (img.src !== foto.caminhoOtimizado && foto.caminhoOtimizado) {
+                              img.src = foto.caminhoOtimizado;
+                            } else if (img.src !== foto.caminhoOriginal) {
+                              img.src = foto.caminhoOriginal;
+                            }
+                          }}
                         />
                       ) : foto.caminhoOtimizado ? (
                         <img
                           src={foto.caminhoOtimizado}
                           alt={foto.legenda ?? foto.nomeOriginal}
                           className="h-full w-full object-cover"
-                          loading="lazy"
+                          loading="eager"
+                          onError={(e) => {
+                            const img = e.currentTarget;
+                            if (img.src !== foto.caminhoOriginal) {
+                              img.src = foto.caminhoOriginal;
+                            }
+                          }}
                         />
                       ) : (
                         <img
                           src={foto.caminhoOriginal}
                           alt={foto.legenda ?? foto.nomeOriginal}
                           className="h-full w-full object-cover"
-                          loading="lazy"
+                          loading="eager"
                         />
                       )}
 

@@ -276,14 +276,20 @@ export function MediaGrid({ assets, titulo, mostrarAcoesAdmin = false }: MediaGr
                       src={versao.caminhoThumbnail}
                       alt={`Pré-visualização de ${asset.nome}`}
                       className="h-full w-full object-cover"
-                      loading="lazy"
+                      loading="eager"
+                      onError={(e) => {
+                        const img = e.currentTarget;
+                        if (isImage && versao && img.src !== versao.caminhoDoArquivo) {
+                          img.src = versao.caminhoDoArquivo;
+                        }
+                      }}
                     />
                   ) : isImage && versao ? (
                     <img
                       src={versao.caminhoDoArquivo}
                       alt={`Pré-visualização de ${asset.nome}`}
                       className="h-full w-full object-cover"
-                      loading="lazy"
+                      loading="eager"
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/10 to-praise-gold/10">
