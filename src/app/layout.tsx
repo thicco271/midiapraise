@@ -4,8 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/components/praisehub/auth-provider";
-import { Header } from "@/components/praisehub/header";
-import { Footer } from "@/components/praisehub/footer";
+import { LayoutShell } from "@/components/praisehub/layout-shell";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,13 +51,9 @@ export default function RootLayout({
     <html lang="pt-BR" className={geistSans.variable}>
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
         <AuthProvider>
-          <div className="flex min-h-screen flex-col">
-            <Header />
-            <main className="flex-1" id="conteudo-principal">
-              {children}
-            </main>
-            <Footer />
-          </div>
+          <LayoutShell>
+            {children}
+          </LayoutShell>
           <Toaster />
           <SonnerToaster position="top-center" richColors />
         </AuthProvider>

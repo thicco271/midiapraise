@@ -21,6 +21,7 @@ import {
   File as FileIcon,
   ImageIcon,
   CalendarHeart,
+  Monitor,
   Share2,
 } from "lucide-react";
 import { CopyLinkButton } from "@/components/praisehub/copy-link-button";
@@ -186,6 +187,20 @@ export default async function BaixarEventoPage({
               {totalDownloads} download{totalDownloads === 1 ? "" : "s"} no total
             </Badge>
           )}
+        </div>
+
+        {/* Ações rápidas */}
+        <div className="flex flex-wrap gap-2 pt-3">
+          <Button asChild variant="outline" size="sm" className="praise-touch">
+            <a
+              href={`/telao?evento=${evento.slug}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Monitor className="h-4 w-4" />
+              Modo Telão
+            </a>
+          </Button>
         </div>
       </header>
 

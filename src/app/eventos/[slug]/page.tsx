@@ -18,6 +18,7 @@ import {
   ChevronLeft,
   Download,
   CalendarHeart,
+  Monitor,
 } from "lucide-react";
 import { CopyLinkButton } from "@/components/praisehub/copy-link-button";
 import { ShareWhatsAppButton } from "@/components/praisehub/share-whatsapp-button";
@@ -156,6 +157,20 @@ export default async function EventoDetalhePage({
               </p>
             )}
           </header>
+
+          {/* Ações rápidas */}
+          <div className="flex flex-wrap gap-2">
+            <Button asChild variant="outline" size="sm" className="praise-touch">
+              <a
+                href={`/telao?evento=${evento.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Monitor className="h-4 w-4" />
+                Modo Telão
+              </a>
+            </Button>
+          </div>
 
           {evento.capa && (
             <div className="overflow-hidden rounded-xl border border-border shadow-sm">
