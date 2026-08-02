@@ -1,27 +1,16 @@
 // POST /api/albums/[id]/upload
-// Multipart com campo "files" (múltiplos) — salva fotos no álbum
+// Multipart com campo "files" (múltiplos) — salva fotos no Supabase Storage
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getCurrentUser, canManageEvents } from "@/lib/session";
 import { slugify } from "@/lib/praise";
-import path from "node:path";
-import fs from "node:fs/promises";
+import { uploadToSupabase, gerarCaminhoAlbum } from "@/lib/supabase-storage";
 import sharp from "sharp";
 import type { ApiResult, AlbumPhotoDTO } from "@/types";
 
-const UPLOAD_ROOT = path.join(process.cwd(), "public", "uploads", "adsa-reimberg");
-const PUBLIC_URL_BASE = "/uploads/adsa-reimberg";
 const MAX_FILE_SIZE = 30 * 1024 * 1024; // 30 MB por foto
 
-const ALLOWED_MIME: Record<string, string> = {
-  "image/jpeg": "jpg",
-  "image/jpg": "jpg",
-  "image/png": "png",
-  "image/webp": "webp",
-  "image/gif": "gif",
-  "image/heic": "heic",
-  "image/heif": "heif",
-};
+const IMAGE_EXTS = new Set(["jpg", "jpeg", "png", "webp", "gif", "heic", "heif"]);
 
 function mapPhoto(p: any): AlbumPhotoDTO {
   return {
@@ -42,10 +31,6 @@ function mapPhoto(p: any): AlbumPhotoDTO {
   };
 }
 
-async function ensureDir(p: string) {
-  await fs.mkdir(p, { recursive: true });
-}
-
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const user = await getCurrentUser();
@@ -62,7 +47,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   try {
     formData = await req.formData();
   } catch {
-    return NextResponse.json<ApiResult<never>>({ ok: false, error: "Falha ao ler multipart/form-data" }, { status: 400 });
+    return NextResponse.json<ApiResult<never>>({ ok: false, error: "Falha ao ler form-data" }, { status: 400 });
   }
 
   const files = formData.getAll("files");
@@ -70,15 +55,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     return NextResponse.json<ApiResult<never>>({ ok: false, error: "Nenhum arquivo recebido" }, { status: 400 });
   }
 
-  // Pasta: /public/uploads/adsa-reimberg/albuns/<album-slug>/
   const albumSlug = slugify(album.nome) || album.id;
-  const dirRel = path.join("albuns", albumSlug);
-  const dirAbs = path.join(UPLOAD_ROOT, dirRel);
-  await ensureDir(dirAbs);
-  await ensureDir(path.join(dirAbs, "thumbs"));
-  await ensureDir(path.join(dirAbs, "otimizados"));
 
-  // Ordem inicial: maior ordem atual + 1
   const ultimaOrdem = await db.albumPhoto.findFirst({
     where: { albumId: album.id },
     orderBy: { ordem: "desc" },
@@ -101,13 +79,6 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       continue;
     }
 
-    const mimeType = (file.type || "application/octet-stream").toLowerCase();
-    const extensao = ALLOWED_MIME[mimeType];
-    if (!extensao) {
-      falhas.push({ nome: file.name, erro: `Tipo não permitido: ${mimeType}` });
-      continue;
-    }
-
     try {
       const arrayBuf = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuf);
@@ -117,20 +88,34 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       const idx = String(proximaOrdem).padStart(3, "0");
       const nomeBase = `${albumSlug}-${idx}-${timestamp}`;
 
-      // Original (apenas para imagens; HEIC/HEIF → converter para JPG)
-      let extOriginal = extensao;
+      // Detectar extensão
+      const nomeLower = (file.name || "foto.jpg").toLowerCase();
+      const extMatch = nomeLower.match(/\.([a-z0-9]+)$/);
+      let extensao = extMatch ? extMatch[1] : "jpg";
+      if (extensao === "jpeg") extensao = "jpg";
+
+      let mimeType = file.type || "image/jpeg";
+      if (extensao === "jpg") mimeType = "image/jpeg";
+      else if (extensao === "png") mimeType = "image/png";
+      else if (extensao === "webp") mimeType = "image/webp";
+      else if (extensao === "gif") mimeType = "image/gif";
+
+      // Converter HEIC/HEIF para JPG
       let bufferOriginal = buffer;
+      let extOriginal = extensao;
       if (extensao === "heic" || extensao === "heif") {
         bufferOriginal = await sharp(buffer).jpeg({ quality: 90 }).toBuffer();
         extOriginal = "jpg";
+        mimeType = "image/jpeg";
       }
-      const nomeOriginal = `${nomeBase}.${extOriginal}`;
-      const caminhoOriginalAbs = path.join(dirAbs, nomeOriginal);
-      await fs.writeFile(caminhoOriginalAbs, bufferOriginal);
 
-      // Otimizado (max 1280px, JPEG qualidade 82)
-      const nomeOtimizado = `${nomeBase}-opt.jpg`;
-      const caminhoOtimizadoAbs = path.join(dirAbs, "otimizados", nomeOtimizado);
+      // Upload original
+      const nomeOriginal = `${nomeBase}.${extOriginal}`;
+      const caminhoOriginal = gerarCaminhoAlbum(albumSlug, nomeOriginal);
+      const urlOriginal = await uploadToSupabase(bufferOriginal, caminhoOriginal, mimeType);
+
+      // Otimizado (1280px)
+      let urlOtimizada: string | null = null;
       let largura: number | null = null;
       let altura: number | null = null;
 
@@ -139,41 +124,43 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
         largura = metadata.width ?? null;
         altura = metadata.height ?? null;
 
-        await sharp(bufferOriginal, { failOn: "none" })
+        const optBuffer = await sharp(bufferOriginal, { failOn: "none" })
           .rotate()
           .resize({ width: 1280, height: 1280, fit: "inside", withoutEnlargement: true })
-          .jpeg({ quality: 82, mozjpeg: true })
+          .jpeg({ quality: 82 })
           .withMetadata({ exif: {} })
-          .toFile(caminhoOtimizadoAbs);
+          .toBuffer();
+
+        const nomeOtimizado = `${nomeBase}-opt.jpg`;
+        const caminhoOpt = gerarCaminhoAlbum(albumSlug, `otimizados/${nomeOtimizado}`);
+        urlOtimizada = await uploadToSupabase(optBuffer, caminhoOpt, "image/jpeg");
       } catch (err) {
-        console.warn("[album-upload] Falha ao otimizar:", file.name, err);
+        console.warn("[album-upload] Falha ao otimizar:", file.name);
       }
 
-      // Thumbnail (400px, JPEG qualidade 75)
-      const nomeThumb = `${nomeBase}-thumb.jpg`;
-      const caminhoThumbAbs = path.join(dirAbs, "thumbs", nomeThumb);
-      let caminhoThumbnail: string | null = null;
+      // Thumbnail (400px)
+      let urlThumb: string | null = null;
       try {
-        await sharp(bufferOriginal, { failOn: "none" })
+        const thumbBuffer = await sharp(bufferOriginal, { failOn: "none" })
           .rotate()
           .resize({ width: 400, height: 400, fit: "cover", withoutEnlargement: true })
-          .jpeg({ quality: 75, mozjpeg: true })
+          .jpeg({ quality: 75 })
           .withMetadata({ exif: {} })
-          .toFile(caminhoThumbAbs);
-        caminhoThumbnail = `${PUBLIC_URL_BASE}/${path.join(dirRel, "thumbs", nomeThumb).split(path.sep).join("/")}`;
-      } catch (err) {
-        console.warn("[album-upload] Falha ao gerar thumbnail:", file.name, err);
-      }
+          .toBuffer();
 
-      const caminhoOriginalUrl = `${PUBLIC_URL_BASE}/${path.join(dirRel, nomeOriginal).split(path.sep).join("/")}`;
-      const caminhoOtimizadoUrl = `${PUBLIC_URL_BASE}/${path.join(dirRel, "otimizados", nomeOtimizado).split(path.sep).join("/")}`;
+        const nomeThumb = `${nomeBase}-thumb.jpg`;
+        const caminhoThumb = gerarCaminhoAlbum(albumSlug, `thumbs/${nomeThumb}`);
+        urlThumb = await uploadToSupabase(thumbBuffer, caminhoThumb, "image/jpeg");
+      } catch (err) {
+        console.warn("[album-upload] Falha ao gerar thumbnail:", file.name);
+      }
 
       const foto = await db.albumPhoto.create({
         data: {
           albumId: album.id,
-          caminhoOriginal: caminhoOriginalUrl,
-          caminhoOtimizado: caminhoOtimizadoUrl,
-          caminhoThumbnail,
+          caminhoOriginal: urlOriginal,
+          caminhoOtimizado: urlOtimizada,
+          caminhoThumbnail: urlThumb,
           nomeOriginal: file.name,
           ordem: proximaOrdem,
           status: "publicado",
@@ -181,17 +168,17 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
           largura,
           altura,
           tamanho: bufferOriginal.length,
-          mimeType: extOriginal === "jpg" ? "image/jpeg" : mimeType,
+          mimeType,
         },
       });
       criadas.push(foto);
     } catch (err) {
       console.error("[album-upload] Erro em", file.name, err);
-      falhas.push({ nome: file.name, erro: "Erro interno ao processar" });
+      falhas.push({ nome: file.name, erro: "Erro interno" });
     }
   }
 
-  // Se álbum não tem capa ainda e criamos fotos, define a primeira como capa
+  // Definir capa se necessário
   if (!album.capaPhotoId && criadas.length > 0) {
     await db.album.update({
       where: { id: album.id },
