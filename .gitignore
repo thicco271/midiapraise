@@ -59,3 +59,5 @@ upload/
 
 # Backups locais
 *.db.pre-restore-*
+.env
+.env.local
