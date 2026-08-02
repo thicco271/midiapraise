@@ -350,7 +350,7 @@ export function AlbumPhotoManager({ albumId, fotosIniciais, capaPhotoId }: Album
               ref={fileInputRef}
               type="file"
               multiple
-              accept="image/png,image/jpeg,image/webp,image/gif,image/heic,image/heif"
+              accept="image/*"
               onChange={handleInputChange}
               className="sr-only"
               aria-label="Selecionar fotos"

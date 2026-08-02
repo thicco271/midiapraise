@@ -42,10 +42,10 @@ const TIPO_LABEL: Record<MediaType, string> = {
 };
 
 const TIPO_ACCEPT: Record<MediaType, string> = {
-  whatsapp: "image/png,image/jpeg,image/webp",
-  rede_social: "image/png,image/jpeg,image/webp",
-  banner_telao: "image/png,image/jpeg,image/webp,application/pdf",
-  outros: "image/png,image/jpeg,image/webp,image/gif,application/pdf,video/mp4,application/zip",
+  whatsapp: "image/*",
+  rede_social: "image/*",
+  banner_telao: "image/*,.pdf",
+  outros: "image/*,.pdf,.mp4,.zip",
 };
 
 function formatarTamanho(bytes: number): string {
