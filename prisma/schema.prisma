@@ -1,14 +1,14 @@
-// PraiseHub - Prisma Schema
-// Central de Mídia ADSA Praise
-// Stack: SQLite via Prisma Client
-// Fases cobertas: Fase 1 (Fundação) + Fase 2 (Eventos)
+// ADSA Reimberg Mídias - Prisma Schema
+// Central de Mídia ADSA Reimberg
+// Stack: PostgreSQL via Prisma Client (Supabase)
+// Fases cobertas: 1 (Fundação) + 2 (Eventos) + 3 (Artes) + 4 (Galeria) + Telão + Backup
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
