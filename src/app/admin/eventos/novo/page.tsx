@@ -3,7 +3,7 @@ export const revalidate = 0;
 
 import { db } from "@/lib/db";
 import { AdminGuard } from "@/components/praisehub/admin-guard";
-import { EventForm } from "@/components/praisehub/event-form";
+import { EventFormWithUpload } from "@/components/praisehub/event-form-with-upload";
 
 export const metadata = { title: "Novo culto · ADSA Reimberg Mídias Admin" };
 
@@ -31,10 +31,10 @@ export default async function NovoEventoPage() {
           <p className="praise-eyebrow">Administração</p>
           <h1 className="text-2xl font-bold text-foreground sm:text-3xl">Novo culto</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Preencha as informações. Você pode salvar como rascunho e publicar depois.
+            Preencha as informações, salve o rascunho, suba os materiais e publique — tudo em uma página.
           </p>
         </header>
-        <EventForm categorias={categoriasDTO} />
+        <EventFormWithUpload categorias={categoriasDTO} />
       </div>
     </AdminGuard>
   );

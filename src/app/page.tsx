@@ -38,7 +38,23 @@ async function getDadosIniciais() {
         status: "publicado",
         visibilidade: "publico",
       },
-      include: { categoria: true },
+      include: {
+        categoria: true,
+        mediaAssets: {
+          where: {
+            tipo: "banner_telao",
+            status: "publicado",
+            visibilidade: "publico",
+          },
+          include: {
+            versoes: {
+              where: { arquivoOficial: true },
+              take: 1,
+            },
+          },
+          take: 1,
+        },
+      },
       orderBy: { data: "asc" },
     }),
     db.serviceSchedule.findMany({
@@ -46,6 +62,16 @@ async function getDadosIniciais() {
       orderBy: [{ diaSemana: "asc" }, { horarioInicio: "asc" }],
     }),
   ]);
+
+  // Para cada evento, se tem banner_telao publicado, usar como capa
+  for (const ev of eventos) {
+    if (!ev.capa && ev.mediaAssets.length > 0) {
+      const banner = ev.mediaAssets[0];
+      if (banner.versoes[0]) {
+        ev.capa = banner.versoes[0].caminhoDoArquivo;
+      }
+    }
+  }
 
   const agora = new Date();
   const proximoCulto = selecionarProximoCulto(eventos, agora);
