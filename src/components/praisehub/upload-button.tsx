@@ -216,7 +216,6 @@ export function UploadButton({ eventoId, eventoSlug, tipo, titulo }: UploadButto
             ref={fileInputRef}
             type="file"
             multiple
-            accept={TIPO_ACCEPT[tipo]}
             onChange={handleInputChange}
             className="sr-only"
             aria-label={`Selecionar arquivos para ${TIPO_LABEL[tipo]}`}
