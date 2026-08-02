@@ -145,10 +145,13 @@ export default async function HomePage() {
                   variant="outline"
                   className="border-praise-gold/40 bg-transparent text-primary-foreground hover:bg-praise-gold/10 hover:text-primary-foreground praise-touch"
                 >
-                  <Link href="/baixar">
+                  <a
+                    href={proximoCulto ? `/api/events/${proximoCulto.id}/download-zip` : "/baixar"}
+                    download
+                  >
                     <Download className="h-4 w-4" />
                     Baixar artes
-                  </Link>
+                  </a>
                 </Button>
               </div>
             </div>
@@ -235,10 +238,13 @@ export default async function HomePage() {
                   </CardContent>
                   <div className="flex flex-wrap gap-2 border-t border-border bg-muted/30 px-4 py-3">
                     <Button asChild size="sm" className="praise-touch">
-                      <Link href={`/baixar/${proximoCulto.slug}`}>
+                      <a
+                        href={`/api/events/${proximoCulto.id}/download-zip`}
+                        download
+                      >
                         <Download className="h-4 w-4" />
-                        Baixar artes
-                      </Link>
+                        Baixar todas as artes
+                      </a>
                     </Button>
                     <Button
                       asChild

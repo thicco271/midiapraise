@@ -312,15 +312,24 @@ export default async function BaixarEventoPage({
             );
           })}
 
-          {/* Compartilhar */}
+          {/* Baixar tudo + Compartilhar */}
           <Card className="bg-secondary/40">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-base">
                 <Share2 className="h-4 w-4 text-praise-gold" aria-hidden="true" />
-                Compartilhar esta página
+                Ações
               </CardTitle>
             </CardHeader>
             <CardContent className="flex flex-wrap gap-2">
+              <Button asChild className="praise-touch">
+                <a
+                  href={`/api/events/${evento.id}/download-zip`}
+                  download
+                >
+                  <Download className="h-4 w-4" />
+                  Baixar tudo (ZIP)
+                </a>
+              </Button>
               <CopyLinkButton url={`/baixar/${evento.slug}`} className="praise-touch" />
               <ShareWhatsAppButton
                 slug={evento.slug}
