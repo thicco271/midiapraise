@@ -55,8 +55,15 @@ function formatarTamanho(bytes: number): string {
 }
 
 function gerarPreviewUrl(file: File): string | undefined {
-  if (file.type.startsWith("image/")) {
-    return URL.createObjectURL(file);
+  try {
+    // Verifica extensão em vez de MIME type (mais compatível com iOS/Safari)
+    const nome = file.name.toLowerCase();
+    const isImage = nome.endsWith(".png") || nome.endsWith(".jpg") || nome.endsWith(".jpeg") || nome.endsWith(".webp") || nome.endsWith(".gif") || file.type.startsWith("image/");
+    if (isImage) {
+      return URL.createObjectURL(file);
+    }
+  } catch {
+    // Ignora erro de createObjectURL
   }
   return undefined;
 }
@@ -80,10 +87,15 @@ export function UploadButton({ eventoId, eventoSlug, tipo, titulo }: UploadButto
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      addFiles(e.target.files);
-      e.target.value = ""; // permite re-selecionar mesmo arquivo
+    try {
+      if (e.target.files && e.target.files.length > 0) {
+        addFiles(e.target.files);
+      }
+    } catch (err) {
+      console.error("Erro ao selecionar arquivo:", err);
     }
+    // Reset para permitir re-selecionar mesmo arquivo
+    try { e.target.value = ""; } catch {}
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -119,7 +131,13 @@ export function UploadButton({ eventoId, eventoSlug, tipo, titulo }: UploadButto
 
     try {
       const formData = new FormData();
-      formData.append("file", item.file);
+      // Garantir que o arquivo tenha um nome simples (sem caracteres especiais)
+      const file = item.file;
+      const ext = file.name.split(".").pop() || "png";
+      const nomeSimples = `arte-${Date.now()}.${ext}`;
+      // Criar um novo File com nome simplificado
+      const arquivoRenomeado = new File([file], nomeSimples, { type: file.type || "image/png" });
+      formData.append("file", arquivoRenomeado);
       formData.append("tipo", tipo);
 
       // Simula progresso enquanto envia
