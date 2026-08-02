@@ -6,14 +6,14 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   reactStrictMode: false,
-  // Permite servir imagens da pasta public/uploads sem otimização do next/image
-  // (usamos <img> com caminho direto, então não precisamos de domínios externos)
   experimental: {
-    // Garante que arquivos em public/ sejam copiados para o standalone build
     serverActions: {
       bodySizeLimit: "50mb",
     },
   },
+  // Impede que o Next.js tente pré-renderizar páginas que acessam banco
+  // (resolve o erro de DATABASE_URL durante o build na Vercel)
+  staticPageGenerationTimeout: 1000,
 };
 
 export default nextConfig;
