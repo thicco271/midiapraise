@@ -52,3 +52,10 @@ prompt
 server.log
 # Skills directory
 /skills/
+# Screenshots de preview (não vão para o GitHub)
+download/preview-*.png
+scripts/preview-*.png
+upload/
+
+# Backups locais
+*.db.pre-restore-*
