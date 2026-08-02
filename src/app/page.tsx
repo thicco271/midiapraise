@@ -42,7 +42,7 @@ async function getDadosIniciais() {
         categoria: true,
         mediaAssets: {
           where: {
-            tipo: "banner_telao",
+            tipo: { in: ["banner_telao", "rede_social", "whatsapp"] },
             status: "publicado",
             visibilidade: "publico",
           },
@@ -52,7 +52,6 @@ async function getDadosIniciais() {
               take: 1,
             },
           },
-          take: 1,
         },
       },
       orderBy: { data: "asc" },
@@ -63,14 +62,20 @@ async function getDadosIniciais() {
     }),
   ]);
 
-  // Para cada evento, se tem banner_telao publicado, usar como capa
+  // Para cada evento, separar banner_telao (frente) e rede_social/whatsapp (celular)
   for (const ev of eventos) {
-    if (!ev.capa && ev.mediaAssets.length > 0) {
-      const banner = ev.mediaAssets[0];
-      if (banner.versoes[0]) {
-        ev.capa = banner.versoes[0].caminhoDoArquivo;
-      }
+    const bannerTelao = ev.mediaAssets.find((m) => m.tipo === "banner_telao" && m.versoes[0]);
+    const redeSocial = ev.mediaAssets.find((m) => m.tipo === "rede_social" && m.versoes[0]);
+    const whatsapp = ev.mediaAssets.find((m) => m.tipo === "whatsapp" && m.versoes[0]);
+
+    // Capa = banner do telão (frente)
+    if (!ev.capa && bannerTelao) {
+      ev.capa = bannerTelao.versoes[0].caminhoDoArquivo;
     }
+    // Anexar arte de celular (rede_social ou whatsapp) como propriedade extra
+    (ev as any).arteCelular = redeSocial?.versoes[0]?.caminhoDoArquivo
+      ?? whatsapp?.versoes[0]?.caminhoDoArquivo
+      ?? null;
   }
 
   const agora = new Date();
@@ -152,18 +157,40 @@ export default async function HomePage() {
             <div className="lg:pl-6">
               {proximoCulto ? (
                 <Card className="overflow-hidden border-praise-gold/30 bg-white text-foreground shadow-2xl">
-                  {proximoCulto.capa ? (
-                     
-                    <img
-                      src={proximoCulto.capa}
-                      alt={`Capa do ${proximoCulto.nome}`}
-                      className="aspect-[16/9] w-full object-cover"
-                    />
-                  ) : (
-                    <div className="flex aspect-[16/9] w-full items-center justify-center bg-gradient-to-br from-primary/10 to-praise-gold/10">
-                      <Calendar className="h-12 w-12 text-primary/40" aria-hidden="true" />
-                    </div>
-                  )}
+                  {/* Container das artes: banner do telão (frente) + arte de celular (atrás) */}
+                  <div className="relative flex items-center justify-center gap-2 bg-gradient-to-br from-primary/5 to-praise-gold/5 p-3">
+                    {/* Arte de celular (9:16 vertical) — atrás */}
+                    {(proximoCulto as any).arteCelular ? (
+                      <div className="relative shrink-0">
+                        <img
+                          src={(proximoCulto as any).arteCelular}
+                          alt={`Arte de celular do ${proximoCulto.nome}`}
+                          className="aspect-[9/16] h-32 w-auto rounded-lg border-2 border-white object-cover shadow-md sm:h-40"
+                        />
+                        <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-full bg-praise-gold px-2 py-0.5 text-[8px] font-semibold text-white">
+                          Celular
+                        </span>
+                      </div>
+                    ) : null}
+
+                    {/* Banner do telão (16:9 horizontal) — na frente */}
+                    {proximoCulto.capa ? (
+                      <div className="relative flex-1">
+                        <img
+                          src={proximoCulto.capa}
+                          alt={`Banner do telão do ${proximoCulto.nome}`}
+                          className="aspect-[16/9] w-full rounded-lg border-2 border-white object-cover shadow-lg"
+                        />
+                        <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-full bg-primary px-2 py-0.5 text-[8px] font-semibold text-white">
+                          Telão
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="flex aspect-[16/9] flex-1 items-center justify-center rounded-lg bg-gradient-to-br from-primary/10 to-praise-gold/10">
+                        <Calendar className="h-12 w-12 text-primary/40" aria-hidden="true" />
+                      </div>
+                    )}
+                  </div>
                   <CardHeader>
                     <p className="praise-eyebrow">
                       {proximoCulto.categoria?.nome ?? "Próximo culto"}
